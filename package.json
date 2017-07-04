@@ -1,0 +1,12 @@
+{
+  "name": "grid-app",
+  "version": "1.0.0",
+  "description": "try Angular",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

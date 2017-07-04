@@ -1,0 +1,69 @@
+<h2>Accessing and basic usage</h2> 
+  <p>In order to check which MATLAB versions are available on the cluster, run the following command 
+   in the opened cluster terminal: 
+   <pre>$ module avail math/matlab></pre>
+  </p>
+  <p>Typically several MATLAB versions are available.</p>
+  <p>To load the appropriate version (if available), run:
+   <pre>$ module load math/matlab/&ltversion&gt</pre>
+   where <kbd>&ltversion&gt</kbd> is the desired available MATLAB version to load.
+  </p>
+  <p>An interactive MATLAB session with graphical user interface (GUI) can be started with 
+   the command (requires X11 forwarding enabled for your ssh login):
+   <pre>$ matlab</pre>
+  </p>
+  <p>Since graphic rendering can be very slow on remote connections, the preferable way to run MATLAB
+   on the cluster is without GUI, with the following command:
+   <pre>$ matlab -nodisplay</pre>
+  </p>
+  <p>In general it is not advisable to invoke an interactive MATLAB session on a login node of the cluster.
+   The recommended way to run a long-duration interactive MATLAB session is to submit an interactive job
+   and start MATLAB from within the dedicated compute node, assigned by the queueing system. As described
+   in the <a href="../index.html#jobsHandle">cluster job submission</a> guide.
+  </p>
+  The following command will execute a MATLAB script on a single thread:
+  <pre>$ matlab -nodisplay -singleCompThread -r script &gtresult.out 2&gt&1</pre>
+  </p>
+  <p>The output of this session will be redirected to the <kbd>result.out</kbd> file. The 
+   <kbd>-singleCompThread</kbd> option prevents the creation of multiple threads. Most of the time,
+   running MATLAB in single threaded mode (as described above) will meet your needs. But if you
+   mathematically intense computations that might benefit from the built-in multi-threading provided
+   by MATLAB's BLAS and FFT implementation, then you may experiment running in multi-threaded mode,
+   by omitting the <kbd>-singleCompThread</kbd> option. (see <a href="#implicitThread">below</a> how to
+   control the number of threads)
+  </p>
+  <p>As with all the processes that require more than a few minutes to run, non-trivial MATLAB jobs must be
+   submitted to the cluster's queuing system.
+  </p>
+  <p>Batch scripts examples are available in the directory pointed to by the environment variable
+   <kbd>$MATLAB_EXA_DIR</kbd>, after having the module loaded.
+  </p>
+  <p>The help page of the MATLAB module may provide more version specific information:
+   <pre>$ module help math/matlab/&ltversion&gt</pre>
+
+<h2>Parallel Computing with MATLAB</h2>
+<h3 id="implicitThread">Implicit Threading</h3>
+  <p>A large number of built-in MATLAB functions may utilize multiple cores automatically, without any
+   code modifications required. This is referred as implicit multi threading and must be strictly 
+   distinguished from explicit parallelism provided by the Parallel Computing Toolbox (PCT) which
+   requires specific commands in your code to create threads.
+  </p> 
+  <p>Implicit threading, particularly takes place for linear algebra operations (such as the solution
+   to a linear system <kbd>A\b</kbd> or matrix products <kbd>A*B</kbd>) and FFT operations. Many other
+   high-level MATLAB functions do also benefit from multi threading capabilities of their underlying 
+   routines. However, the user can still enforce single threaded mode by adding <kbd>-singleCompThread</kbd>
+   command line option.
+  </p>
+  <p>Whenever implicit threading takes place, MATLAB will detect the total number of cores that exist on a 
+   machine and by default uses <strong>all of them</strong>. This has very important implications for MATLAB
+   jobs in HPC environments with shared-node job scheduling policy (i.e. with multiple users sharing one 
+   compute node). Due to the behaviour described above, a MATLAB job may take over more compute resources 
+   than assigned by the queueing system of the cluster (and thereby taking away these resources from all
+   other users having jobs running on the same node - including your own jobs).
+  </p>
+  <p>Therefore, when running multi-threaded mode, MATLAB always requires the user's intervention to 
+   <strong>not</strong> allocate all cores of the machine (unless requested so from the queueing system).
+   The number of threads must be controlled from within the code by means of the <kbd>maxNumCompThreads(N)</kbd>
+   function (which is supposed to be deprecated) or, alternatively, with the <kbd>feature('numThreads', N)</kbd>
+   function.
+  </p>

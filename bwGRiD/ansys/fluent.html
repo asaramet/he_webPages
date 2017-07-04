@@ -1,0 +1,56 @@
+<h2>ANSYS FLUENT jobs on bwGRiD Cluster, Esslingen</h2>
+  <p>A job script to submit a batch job called <em>job_fluent.sh</em> that runs <em>fluent</em>
+    with ANSYS version 16.0, on 8 processors up to maximum 6 hours and has an input file
+    named <em>fluentInput.inp</em> looks like:
+  </p>
+  <p><pre>#!/bin/bash
+#number of processors to run a job ncpus=nodes*ppn
+#PBS -l nodes=1:ppn=8:mem24gb
+
+#wall time (up to 24 hours)
+#PBS -l walltime=06:00:00
+
+#name of the job
+#PBS -N test_fluent
+
+#set a log file for job's output 
+#PBS -o parallelRun.log
+#PBS -j oe
+
+#send an e-mail when a job begins, aborts or ends
+#PBS -m abe
+#e-mail address specification
+#PBS -M kenobi@hs-esslingen.de
+
+#specify the ANSYS version to load (available on the cluster)
+VERSION="16.0"
+    
+#switches to the directory from which 'qsub' command run:
+cd $PBS_O_WORKDIR
+
+#some info about job submission time
+echo "Starting at "
+date
+
+#load the available ansys module 
+module load cae/ansys/$VERSION
+
+#create the hosts file to run fluent on:
+echo $(cat $PBS_NODEFILE) > fluent.hosts
+echo '''' >> fluent.hosts
+
+#calculate number of nodes
+nrNodes=$(cat $PBS_NODEFILE |wc -l)
+echo "number of nodes: $nrNodes"
+
+#run fluent in parallel
+fluent 3d -t$nrNodes -rsh=ssh -g -pib -mpi=openmpi -cnf=fluent.hosts -i fluentInput.inp
+
+#some post processing info:
+echo "Run completed at "
+date</pre></p>
+
+<p>To start the job on the cluster, from the directory where your <em>job_fluent.sh</em> is, do:
+<pre>$ qsub job_fluent.sh</pre></p>
+<p>You don't need to define any extra variables as everything is already defined in the <em>job_fluent.sh</em>
+header, through <kbd>#PBS </kbd> keywords.</p>

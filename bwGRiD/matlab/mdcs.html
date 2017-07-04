@@ -1,0 +1,44 @@
+<h2>Remote job submission from a local MATLAB installation GUI to bwGRiD Cluster</h2>
+<p><strong>Prerequisite:</strong> You need a MATLAB installation on your desktop computer. For maximum
+ compatibility, your local MATLAB version should match the version on the cluster.
+</p>
+<p>With MATLAB Distributed Computing Server (MDCS) it is possibly to run computationally intensive 
+ MATLAB programs and Simulink models on the bwGRiD Cluster directly from your local desktop computer.
+</p>
+<p>Usually, a program or model is developed on a desktop computer using Parallel Computing Toolbox
+ to be scaled up to run on multi-cores clusters, using MDCS. The server supports batch jobs, parallel
+ computations, and distributed large data.
+</p>
+<p>The MDCS license comprises a total of 32 workers. <strong>Note:</strong> one worker is always 
+ required to manage the batch job and the pool of workers. This means that a job that needs for example
+ 8 workers will consume 9 CPU cores.
+</p>
+<h3>MATLAB MDCS environment configuration on a local desktop PC</h3>
+  <ul>
+    <li>Download the script files from the <a href="#downloads">"Downloads"</a> 
+     section, specific to your operating system (Windows, Linux or Mac)</li>
+    <li>For Windows users: unzip the downloaded <kbd>*.zip</kbd> file and place the contents
+     into <kbd>%matlab%\toolbox\local</kbd>. If you don't have the permissions, then place the 
+     contents in the folder returned by <kbd>userpath</kbd> (for example,
+     <kbd>My Documents\MATLAB</kbd> or <kbd>Documents\MATLAB</kbd>).</li>
+    <li>For Linux users: untar the downloaded <kbd>*.tar</kbd> file and place the contents into
+     <kbd>$matlab/toolbox/local</kbd>.</li>
+    <li>Start MATLAB. Configure MATLAB to run parallel jobs on the bwGRiD cluster by calling
+     </kbd>configCluster</kbd>. This configuration needs to be done only once for each version 
+     of MATLAB (e.g. R2015a, R2015b)</li>
+  </ul>
+<h3>Preparations</h3>
+<p>
+  Detailed info about the local configuration as well as some guidelines on using MATLAB MDCS 
+  is written in the <kbd>Getting Started with Serial and Parallel MATLAB.docx</kbd> file, from 
+  the downloaded <kbd>*.zip</kbd> folder.
+</p>
+<p><strong style="color:red">Note:</strong> on first calling <kbd>configCluster</kbd> in your <kbd>MATLAB</kbd>
+  session, you will be asked for the <kbd>HOME</kbd> folder path on the cluster. It is different for every 
+  user and you can get it by running on the cluster the following command:
+  <pre>
+$ echo $HOME </pre>
+  The result should be something like:
+  <pre>
+$ /home/es/es_es/es_idname </pre>
+</p>

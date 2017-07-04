@@ -1,0 +1,22 @@
+<h1>ANSYS on bwGRiD Cluster, Esslingen</h1>
+  <h2>Accessing and basic usage</h2>
+    <p>To view which ANSYS modules are available to use on the cluster,
+      run the following command:
+      <pre>$ module avail cae/ansys</pre> 
+    </p>
+    <p>To load the appropriate version (if available), run:
+      <pre>$ module load cae/ansys/&ltversion&gt</pre>
+      where <kbd>&ltversion&gt</kbd> is the desired available ANSYS version to load.
+    </p>
+  <h3>Licensing</h3>
+    <p>ANSYS offered 69 HPC licenses to the universities in Baden-Württemberg for scientific research.
+      The license server is located in KIT, Karlsruhe, and all the universities in this region are using
+      the same licenses under the bwHPC-C5 Project.
+    </p>
+    <p>Therefore, a cluster user can access up to 69 processors for a single ANSYS job on bwGRiD Cluster. Also,
+      ANSYS jobs may fail due to no license availability at the moment if all of the 69 licenses are 
+      currently in use by any other user on bwHPC-C5 Clusters. Unfortunately, the information about the 
+      license usage is only available to the server administrators in KIT, and any job which will not have 
+      a free licence will be aborted with an error and will have to be restarted again later. 
+    </p>
+

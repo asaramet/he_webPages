@@ -1,0 +1,60 @@
+<h2>ANSYS CFX jobs on bwGRiD Cluster, Esslingen</h2>
+  <p>A job script to submit a batch job called <em>job_cfx.sh</em> that runs <em>cfx solver</em>
+    with ANSYS version 16.0, on 8 processors up to maximum 6 hours and has an input file
+    named <em>cfxInput.def</em> looks like:
+  </p>
+  <p><pre>#!/bin/bash
+#number of processors to run a job ncpus=nodes*ppn
+#PBS -l nodes=1:ppn=8:mem24gb
+
+#wall time (up to 24 hours)
+#PBS -l walltime=06:00:00
+
+#name of the job
+#PBS -N test_cfx
+
+#set a log file for job's output 
+#PBS -o parallelRun.log
+#PBS -j oe
+
+#send an e-mail when a job begins, aborts or ends
+#PBS -m abe
+#e-mail address specification
+#PBS -M kenobi@hs-esslingen.de
+
+#specify the ANSYS version to load (available on the cluster)
+VERSION="16.0"
+
+#specify the path and the name of the input file:
+export INPUTFILE=cfxInput.def
+    
+#switches to the directory from which 'qsub' command run:
+cd $PBS_O_WORKDIR
+
+#some info about job submission time
+echo "Starting at "
+date
+
+#load the available ansys module 
+module load cae/ansys/$VERSION
+export CFX5RSH=ssh
+
+#create the hosts list
+HOSTS=$(cat $PBS_NODEFILE)
+HOSTS=$(echo $HOSTS | sed -e 's/ /,/g')
+
+#calculate number of nodes
+nrNodes=$(cat $PBS_NODEFILE |wc -l)
+echo "number of nodes: $nrNodes"
+
+#run cfx5solve in parallel
+cfx5solve -batch -def $INPUTFILE -par-host-list $HOSTS -part $nrNodes -start-method "PVM Distributed Parallel"
+
+#some post processing info:
+echo "Run completed at "
+date</pre></p>
+
+<p>To start the job on the cluster, from the directory where your <em>job_cfx.sh</em> is, do:
+<pre>$ qsub job_cfx.sh</pre></p>
+<p>You don't need to define any extra variables as everything is already defined in the <em>job_cfx.sh</em>
+header, through <kbd>#PBS </kbd> keywords.</p>
