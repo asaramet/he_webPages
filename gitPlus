@@ -7,7 +7,7 @@ then go to ~/.public_html
 
 and set your files for download, or create your own webpage index.html
 
-also you can link the files to git repo on this page, using info from: 
+also you can link the files to git repo on this page, using info from:
 
 http://lisas.de/~adrian/?p=61
 
@@ -18,8 +18,7 @@ the HE user page URL is:
 http://www2.hs-esslingen.de/~asaramet/
 
 # copy the bwGRiD web page to HE/~asaramet:
-rsync -avh /home/asaramet/Dropbox/programming/web/bwGRiD asaramet@rzlx0900:~/.public_html
+rsync -avh ./bwGRiD asaramet@rzlx0900.hs-esslingen.de:~/.public_html
 
 # update the bwGRiD web page from local pc to HE/~asaramet:
-rsync -uavh /home/asaramet/Dropbox/programming/web/bwGRiD asaramet@rzlx0900:~/.public_html
-
+rsync -uavh ./bwGRiD asaramet@rzlx0900.hs-esslingen.de:~/.public_html
