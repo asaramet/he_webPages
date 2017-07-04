@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const app = require('./app');
-const debug = require('debug')("angular4-nodejs:server");
+const debug = require('debug');
 const http = require('http');
 const fs = require('fs');
 
