@@ -1,0 +1,59 @@
+<h2>STAR-CCM+ jobs on bwGRiD Cluster, Esslingen</h2>
+  <p>A job script to submit a batch job called <em>job_star.sh</em> that runs a STAR-CCM+ case file named <em>FS.sim</em>
+    with STAR-CCM+ version 11.06.010, on 8 processors up to maximum 6 hours, looks like:
+  </p>
+  <p><pre>#!/bin/bash
+# number of processors to run a job ncpus=nodes*ppn
+#PBS -l nodes=1:ppn=8:mem24gb
+
+# wall time (up to 24 hours)
+#PBS -l walltime=06:00:00
+
+# name of the job
+#PBS -N test_star-ccm
+
+# set a log file for job's output
+#PBS -o clusterRun.log
+#PBS -j oe
+
+# send an e-mail when a job begins, aborts or ends
+#PBS -m abe
+# e-mail address specification
+#PBS -M kenobi@hs-esslingen.de
+
+# specify the STAR-CCM+ version to load (available on the cluster)
+VERSION="11.06.010"
+
+# set the POD license key variable
+export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
+export LM_PROJECT=PODKEY_ex_aa34$rasda
+
+# specify case file name
+CASE_NAME=FS.sim
+$INPUT="$PBS_O_WORKDIR"/$CASE_NAME
+
+# switches to the directory from which 'qsub' command run:
+cd $PBS_O_WORKDIR
+
+# some info about job submission time
+echo "Starting at "
+date
+
+# load the available STAR-CCM + module
+module load esslingen/star-ccm+-$VERSION
+
+# calculate number of nodes
+np=$(cat $PBS_NODEFILE | wc -l)
+echo "number of nodes: $np"
+
+# start parallel star-ccm+ job
+starccm+ -power -rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
+
+#some post processing info:
+echo "Run completed at "
+date</pre></p>
+
+<p>To start the job on the cluster, from the directory where your <em>job_star.sh</em> is, do:
+<pre>$ qsub job_star.sh</pre></p>
+<p>You don't need to define any extra variables as everything is already defined in the <em>job_star.sh</em>
+header, through <kbd>#PBS </kbd> keywords.</p>
