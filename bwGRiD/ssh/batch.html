@@ -1,10 +1,10 @@
 <h1>Batch Jobs on bwGRiD Cluster Esslingen</h1>
-<p>At Esslingen University of Applied Sciences, bwGRiD high performance computing cluster uses the 
+<p>At Esslingen University of Applied Sciences, bwGRiD high performance computing cluster uses the
   TORQUE resource manager (based on OpenPBS) and the Moab Workload Manager to manage and schedule jobs.
 </p>
 <h2>TORQUE overview</h2>
 <p>
-  TORQUE is a resource management system for submitting and controlling jobs on HPC 
+  TORQUE is a resource management system for submitting and controlling jobs on HPC
   clusters. It manages jobs submitted to various queues on a computing system, each queue
   representing a group of resources with attributes necessary for the job.
 </p>
@@ -23,23 +23,23 @@
     <td>Terminate a job prior to it's completion</td>
   </tr>
 </table>
-<p>TORQUE includes numerous directives, which are used to specify resource requirements and other 
+<p>TORQUE includes numerous directives, which are used to specify resource requirements and other
  attributes for batch and interactive jobs. This directives can appear as header lines (which start
  with <kbd>#PBS</kbd>) in a batch job script or as command-line options to the <kbd>qsub</kbd> command.
 </p>
 <h2>Job scripts</h2>
-<p>To run a job in batch mode on a high-performance computing system using TORQUE, first prepare a job 
- script that specifies the application you want to run and the resources required to run it, then submit 
- the script to TORQUE using <kbd>qsub</kbd> command. TORQUE passes your job and its requirements to the 
+<p>To run a job in batch mode on a high-performance computing system using TORQUE, first prepare a job
+ script that specifies the application you want to run and the resources required to run it, then submit
+ the script to TORQUE using <kbd>qsub</kbd> command. TORQUE passes your job and its requirements to the
  system's job scheduler, which then dispatches your job whenever the required resources are available.
 </p>
-<p>A very basic job script might contain just a bash shell script. However, TORQUE job scripts most 
- commonly contain at least one executable command preceded by a list of directives that specify resources 
- and other attributes needed to execute the command (e.g., wall-clock time, the number of nodes and 
- processors, and filenames for job outputs and errors). These directives are listed in header lines 
+<p>A very basic job script might contain just a bash shell script. However, TORQUE job scripts most
+ commonly contain at least one executable command preceded by a list of directives that specify resources
+ and other attributes needed to execute the command (e.g., wall-clock time, the number of nodes and
+ processors, and filenames for job outputs and errors). These directives are listed in header lines
  (lines beginning with <kbd>#PBS</kbd>), which should precede any executable lines in your job script.
 </p>
-<p>Additionally, your TORQUE job script should begin with a line that specifies the command interpreter 
+<p>Additionally, your TORQUE job script should begin with a line that specifies the command interpreter
  under which it should run.
 </p>
 <p>For example, a TORQUE job script for an MPI job might look like this:</p>
@@ -53,7 +53,7 @@
 #PBS -N JobName
 #PBS -j oe
 
-mpiexec -mp 16 -machinefile $PBS_NODEFILE ~/bin/binaryname
+mpiexec -np 16 -machinefile $PBS_NODEFILE ~/bin/binaryname
 </pre>
 <p>In the example above, the first line indicates that the script should be read using <kbd>bash</kbd>
  command interpreter. Then, several header lines of TORQUE directives are included:
@@ -82,7 +82,7 @@ mpiexec -mp 16 -machinefile $PBS_NODEFILE ~/bin/binaryname
   </tr>
   <tr>
     <td><kbd>#PBS -m abe</kbd></td>
-    <td>Sends email if the job is (<kbd>a</kbd>) aborted, (<kbd>b</kbd>) begins, and when it 
+    <td>Sends email if the job is (<kbd>a</kbd>) aborted, (<kbd>b</kbd>) begins, and when it
      (<kbd>e</kbd>) ends</td>
   </tr>
   <tr>
@@ -94,14 +94,14 @@ mpiexec -mp 16 -machinefile $PBS_NODEFILE ~/bin/binaryname
     <td>Joins standard output and standard error</td>
   </tr>
 </table>
-<p>The last line in the example is the executable line. It tells the operating system to use 
+<p>The last line in the example is the executable line. It tells the operating system to use
  <kbd>mpiexec</kbd> command to execute <kbd>~/bin/binaryname</kbd> binary on 16 processors from the
  machines listed in <kbd>$PBS_NODEFILE</kbd>
 </p>
 <p>
- <strong>*</strong> 
+ <strong>*</strong>
  Currently there are 2 types of nodes available on the cluster: nodes with 24GB RAM (<kbd>mem24gb</kbd>)
- and nodes with 64GB RAM (<kbd>mem64gb</kbd>). The 64GB RAM nodes are considerably less then 24GB RAM nodes, 
+ and nodes with 64GB RAM (<kbd>mem64gb</kbd>). The 64GB RAM nodes are considerably less then 24GB RAM nodes,
  and you may have to wait longer before your job starts. You can request up to maximum 8 processors for each
  node with 24GB RAM, and 16 processors for each node with 64GB RAM.
 </p>
@@ -124,8 +124,8 @@ qsub job.pbs
 qsub -l walltime=10:00:00 job.pbs
 </pre>
 <p><strong>Note:</strong> Command-line options will overwrite TORQUE directives in your job script.</p>
-<p>To include multiple options on the command line, use either one -l flag with several comma-separated 
- options, or multiple <kbd>-l</kbd> flags, each separated by a space. For example, the following two 
+<p>To include multiple options on the command line, use either one -l flag with several comma-separated
+ options, or multiple <kbd>-l</kbd> flags, each separated by a space. For example, the following two
  command are equivalent:
 </p>
 <pre>
@@ -235,7 +235,7 @@ qsub -l nodes=2:ppn=8:mem24gb -l walltime=24:00:00 job.pbs
     <td>Show intervals and node counts presently available for backfill jobs.</td>
   </tr>
 </table>
-<p>For more Moab commands and their descriptions, see the Adaptive Computing 
+<p>For more Moab commands and their descriptions, see the Adaptive Computing
   <a target="_blank" href="http://docs.adaptivecomputing.com/mwm/7-1-3/help.htm#a.gcommandoverview.html">
    Scheduler Commands page</a>
 </p>
