@@ -24,10 +24,6 @@
 # specify the STAR-CCM+ version to load (available on the cluster)
 VERSION="11.06.010"
 
-# set the POD license key variable
-export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
-export LM_PROJECT=PODKEY_ex_aa34$rasda
-
 # specify case file name
 CASE_NAME=FS.sim
 $INPUT="$PBS_O_WORKDIR"/$CASE_NAME
@@ -41,6 +37,10 @@ date
 
 # load the available STAR-CCM + module
 module load esslingen/star-ccm+-$VERSION
+
+# set the POD license key variable
+export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
+export LM_PROJECT=exaa34$rasda
 
 # calculate number of nodes
 np=$(cat $PBS_NODEFILE | wc -l)
