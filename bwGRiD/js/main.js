@@ -1,6 +1,7 @@
 
 $(document).ready(function() {
   //don't forget to start http server if run locally
-  $("#bwUniCluster").load("bwUniCluster.html");
-  $("#links").load("links.html");
+  $("#meta").load("std/meta.html");
+  $("#header").load("std/header.html");
+  $("#footer").load("std/footer.html");
 });

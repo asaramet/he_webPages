@@ -68,7 +68,7 @@
 
   /* (en) Backup for correct positioning */
   /* (de) Absicherung korrekte Positionierung */
-  #header, #nav, #main, #footer { clear:both; }
+  #header, #nav_bar, #main, #footer { clear:both; }
 
  /*------------------------------------------------------------------------------------------------------*/
 
@@ -184,16 +184,25 @@
   font-size: 30px;
 }
 
-#nav {
-  text-align: right;
+#nav_bar{
   font-weight: bold;
   font-family: "Montserrat", serif;
   font-size: 14px;
 }
 
-#nav a {
+#nav {
+  padding: 2px;
+  text-align: right;
+}
+
+#nav a, #backnav a {
   color: #336699;
   text-decoration: none;
+}
+
+#backnav {
+  padding: 2px;
+  float: left;
 }
 
 pre {

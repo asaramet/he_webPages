@@ -68,10 +68,10 @@
 
   /* (en) Backup for correct positioning */
   /* (de) Absicherung korrekte Positionierung */
-  #header, #nav, #main, #footer { clear:both; }
+  #header, #nav_bar, #main, #footer { clear:both; }
 
  /*------------------------------------------------------------------------------------------------------*/
-	
+
     #body1 {
 		background: #fff url(../images/layout/bg_aussen.gif) repeat top left;
 		padding: 0;
@@ -110,19 +110,19 @@
 	.page {
 		padding: 0;
 	}
-	
+
 	#banner {
 		height: 150px;
 		background: url(../images/layout/bg_banner.gif) repeat;
 	}
-	
+
 	#bannerfoto {
 		position: absolute;
 		margin-left: 220px;
 		width: 780px;
 		height: 150px;
 	}
-	
+
 	#logo {
 		position: absolute;
 		margin-left: 10px;
@@ -131,22 +131,11 @@
 		height: 75px;
 		z-index: 2;
 	}
-	
-	#footer {
-		background: #fff;
-		padding: 10px 20px 10px 220px;
-	}
-	
-	#footer a	 {
-		color: #666;
-		font: 9px Verdana;
-		text-decoration: none;
-	}
-	
+
 /* floats einschließen in #main */
-	#main { 
+	#main {
 		background: url(../images/layout/bg_content.gif) repeat;
-		width: 100%; 
+		width: 100%;
 		padding: 0;
 		clear:both;
 	}
@@ -195,17 +184,25 @@
   font-size: 30px;
 }
 
-#nav {
-  text-align: right;
-  margin-right: 10px;
+#nav_bar{
   font-weight: bold;
   font-family: "Montserrat", serif;
   font-size: 14px;
 }
 
-#nav a {
+#nav {
+  padding: 2px;
+  text-align: right;
+}
+
+#nav a, #backnav a {
   color: #336699;
   text-decoration: none;
+}
+
+#backnav {
+  padding: 2px;
+  float: left;
 }
 
 pre {
