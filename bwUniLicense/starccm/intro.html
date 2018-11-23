@@ -1,0 +1,14 @@
+<h2>STAR-CCM+ licensing on bwUniCluster.</h2>
+<p>CD-adapco, the company behind STAR-CCM+ offers, cheap or free of charge licenses for academical projects.</p>
+<p>These licenses are managed by CD-adapco own license manager and can be used on demand by the user owning a STAR-CCM+ POD-key.</p>
+<p>The license server is already connected to bwUniCluster and any user can run jobs pointing the software to it
+  (<kbd>flex.cd-adapco.com</kbd>), and the POD-key.</p>
+<p>To start a STAR-CCM+ job on bwUniCluster, you'll have to send a
+  <a target="_blank" href="http://www.bwhpc-c5.de/wiki/index.php/Batch_Jobs">batch script</a>,
+  to <kbd>msub</kbd> application.
+</p>
+<h3 style="color:red">Note: All the STAR-CCM+ jobs on the cluster should run only with a POD-key license type!</h3>
+<p>As the STAR-CCM+ license server in HE is managing all the licenses in the university, including the ones in the PC-pools,
+  you risk to block any STAR-CCM+ calculation made in "house" at the university, as the total number of licenses is limited,
+  and using some of them for HPC jobs will put all the other machines at the university in a license queue, waiting for the HPC job to finish.
+</p>

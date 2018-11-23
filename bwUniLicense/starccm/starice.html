@@ -1,0 +1,74 @@
+<h3>A batch script for a STAR-CCM+ job running with a POD-key license and a SSH tunnel.</h3>
+<p>Lately SIEMENS starts providing some STAR-CCM+ addons, like STAR-ICE (engine simulation),
+  which require a specific license check not provided by the POD manager.
+</p>
+<p>In such cases the user needs access to the HE license manager to check if the addon is eligible to run in STAR-CCM+ environment.</p>
+<p>A SSH tunnel listening to <kbd>lizenz-cd-adapco.hs-esslingen.de</kbd> on ports 1999 and 49296 is therfore required</p>
+<p>The script will be similar to the POD one, adding the SSH tunnel and mentioning it in the license server check variable.</p>
+
+<p>The job will run on a single node, 8 processors, 8gb RAM, with STAR-CCM+ v.12.06.011, using a POD-key license.</p>
+<p>We are assuming the job is started by a Esslingen user with the user id: <kbd>usidfs01</kbd></p>
+<p>And the user POD key will be a string <kbd>sum829key020oops22od</kbd></p>
+<p><pre>
+  #!/bin/bash
+  #
+  # Number of cores and processors to use
+  #MSUB -l nodes=1:ppn=8
+  #MSUB -l pmem=6000mb
+  #
+  # Time to run
+  #MSUB -l walltime=02:00:00
+
+  # define the queue class: singlenode, multinode, verylong, fat etc.
+  # more info: http://www.bwhpc-c5.de/wiki/index.php/Batch_Jobs_-_bwUniCluster_Features#msub_-q_queues
+  #MSUB -q singlenode
+  #
+  # Name of the job
+  #MSUB -N starccm_pod+ssh-test
+  #
+  # set a log file for job's output
+  #MSUB -o test_simple.log
+  #
+  # send an e-mail when a job begins, aborts or ends
+  #MSUB -m abe
+  # e-mail address specification
+  #MSUB -M usidft01@hs-esslingen.de
+
+  # Switches to the directory from which the "qsub" command run:
+  cd $MOAB_SUBMITDIR
+
+  echo "Starting at "
+  date
+
+  # specify the STAR-CCM+ version to load (available on the cluster)
+  VERSION="12.06.011"
+
+  # specify sim case file name
+  CASE_NAME=test_case.sim
+  INPUT="$MOAB_SUBMITDIR"/$CASE_NAME
+
+  # load the available STAR-CCM + module
+  module load cae/star-ccm+/$VERSION
+
+  # start a SSH tunnel, creating a control socket.
+  ssh -MS starccm-socket -fnNT -L 1999:lizenz-cd-adapco.hs-esslingen.de:1999 \
+  -L 49296:lizenz-cd-adapco.hs-esslingen.de:49296 \
+  usidft01@comserver.hs-esslingen.de
+
+  # set license variables: server address and POD key string
+  export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com;1999@localhost
+  export LM_PROJECT=sum123key040oops55od
+
+  # calculate number of nodes
+  np=$MOAB_PROCCOUNT
+  echo "number of nodes: $np"
+
+  # start parallel star-ccm+ job
+  starccm+ -power -np $np -batch run $CASE_NAME
+
+  # close the SSH control socket
+  ssh -S starccm-socket -O exit usidft01@comserver.hs-esslingen.de
+
+  echo "Run completed at "
+  date
+</pre></p>

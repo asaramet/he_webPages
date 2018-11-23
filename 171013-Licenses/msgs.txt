@@ -1,0 +1,9 @@
+Hallo --
+
+im Rahmen des "HAW auf bwUniCluster" Projekt, machen wir im HFT Stuttgart ein bwHPC Nutzertreffen der HAWs.
+Da soll ich ein Vortrag halten über die Lizenz Typen auf bwUniCluster, Probleme, Lösungen usw. 
+
+Als du mehr Erfahrung in den Thema hast, kannst du mir vielleicht helfen mit ein Paar Notizen, Info usw. die ich im den Vortrag zeigen soll/muss?
+
+Danke und beste Grüße
+Alexandru 
