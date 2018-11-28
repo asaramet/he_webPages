@@ -23,3 +23,14 @@
 <p><pre>
   ssh -S tunnel-socket -O exit userID@comserver.hs-esslingen.de
 </pre></p>
+<h2>Wrapper to run ANSYS jobs on bwUniCluster</h2>
+<p>On bwUniCluster, SSH communication between nodes, which is needed to run ANSYS jobs, is blocked.</p>
+<p>Therefore, don't forget to load a specific wrapper which solves this problem, with:</p>
+<p><pre>
+  module load system/ssh_wrapper/0.1
+</pre></p>
+<p>And set respective variables. In case of FLUENT, for example, they will be:</p>
+<p><pre>
+  export FLUENT_SSH=/opt/bwhpc/common/system/ssh_wrapper/0.1/ssh
+  export FLUENT_SKIP_SSH_CHECK=1
+</pre></p>
