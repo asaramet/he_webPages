@@ -1,27 +1,27 @@
 <h1>Cluster Access</h1>
   <h2>Registration</h2>
-    <p>Granting access and issuing an user account for bwGRiD cluster in Esslingen, a registration at 
+    <p>Granting access and issuing an user account for bwGRiD cluster in Esslingen, a registration at
      <a target="_blank" href="https://bwservices.hs-esslingen.de/" target="_blank">HE services website</a> is required.
     </p>
     <ol>
-      <li>The registration is done automatically through bwIDM service. Once you are on the 
-       <a target="_blank" href="https://bwservices.hs-esslingen.de/">HE services website</a>, 
+      <li>The registration is done automatically through bwIDM service. Once you are on the
+       <a target="_blank" href="https://bwservices.hs-esslingen.de/">HE services website</a>,
        select your home organisation from the list and click <strong>Proceed</strong>;
       </li>
-      <li>You will be redirected to the <em>Identity Provider</em> of your home organisation. (Hochschule 
+      <li>You will be redirected to the <em>Identity Provider</em> of your home organisation. (Hochschule
        Esslingen login site, for example);
       </li>
-      <li>Enter your home-organisation user ID/username and your home-organisation password and click 
+      <li>Enter your home-organisation user ID/username and your home-organisation password and click
        the <strong>Login</strong> button;
       </li>
       <li>You will be redirected back to the registration website;</li>
       <li>Select <strong>bwGRiD Service Description</strong> (on the left hand side)</li>
-      <p><img src="images/bwGRiDLogin.png" alt="bwGRiD Service" height="85" class="image"></p>
+      <p><img src="ssh/images/bwGRiDLogin.png" alt="bwGRiD Service" height="85" class="image"></p>
       <li>Click <strong>Register</strong>
       <li>Set a service password for authentication on bwGRiD Cluster</li>
     </ol>
   <h2>Login</h2>
-    <p>For bwGRiD Cluster login, only the secure shell <strong>SSH</strong> is allowed. Other protocols 
+    <p>For bwGRiD Cluster login, only the secure shell <strong>SSH</strong> is allowed. Other protocols
      like <strong>telnet</strong> or <strong>rlogin</strong> are not allowed for security reasons.
     </p>
     <p>A connection to bwGRiD cluster can be established with the command:
@@ -32,14 +32,14 @@
      <pre>$ ssh -X &ltUserID&gt@grid01.hs-esslingen.de</pre>
     <p>
     <h4>Hints for using PuTTY (for Windows users)</h4>
-      <p>Start <strong>PuTTY</strong>, fill in at window <kbd>PuTTY Configuration</kbd>, under 
+      <p>Start <strong>PuTTY</strong>, fill in at window <kbd>PuTTY Configuration</kbd>, under
        category <kbd>Session</kbd> the following fields:
        <pre>
 Host Name (or IP address) : grid01.hs-esslingen.de
 Port                      : 22
 Connection Type           : SSH </pre>
        and click on <kbd>Open</kbd>, enter your password and accept adding <em>host key</em>.
-       <strong>Note:</strong> it is possible to save the configuration, given a certain name, and be loaded 
+       <strong>Note:</strong> it is possible to save the configuration, given a certain name, and be loaded
        later via that name.
       </p>
     <h3>Hints for using WinSCP</h3>
@@ -49,11 +49,11 @@ File Protocol           : SFTP
 Host Name               : grid01.hs-esslingen.de
 Port                    : 22
 User name               : &ltUser ID&gt </pre>
-       click <kbd>Login</kbd> and enter your password. <strong>Note:</strong> it is possible to save the 
+       click <kbd>Login</kbd> and enter your password. <strong>Note:</strong> it is possible to save the
        configured session and load it later, via the given name.
       </p>
     <h3>About User ID / User name</h3>
-      <p><kbd><strong>&ltUserID&gt</strong><kbd> of the <kbd>ssh</kbd> command is a placeholder for the 
+      <p><kbd><strong>&ltUserID&gt</strong><kbd> of the <kbd>ssh</kbd> command is a placeholder for the
        <strong>username</strong> at your home organisation with a <strong><em>prefix</em></strong> as
        followed:
        <ul>
@@ -72,15 +72,15 @@ User name               : &ltUser ID&gt </pre>
        </ul>
       </p>
     <h3> Allowed activities on the login node (<kbd>grid01</kbd>)</h3>
-     <p>The login node on the cluster is the node you are automatically redirected once you login, named 
-      <kbd>grid01</kbd>. It is the access point to the compute system and the user's working directories. 
-      The login node is shared with all the users of the cluster. Therefore, the activates on this node are 
+     <p>The login node on the cluster is the node you are automatically redirected once you login, named
+      <kbd>grid01</kbd>. It is the access point to the compute system and the user's working directories.
+      The login node is shared with all the users of the cluster. Therefore, the activates on this node are
       limited to the set up of the batch jobs to run. The activities may also be:
         <ul>
           <li><strong>short</strong> compilation of your code;
           <li><strong>short</strong> pre- and post-processing of your batch jobs.
         </ul>
-      To guarantee the cluster stability, it is <strong style="color:red">not allowed:</strong> to run 
+      To guarantee the cluster stability, it is <strong style="color:red">not allowed:</strong> to run
       compute jobs directly on the login node. Compute jobs must be submitted to the queueing system.
       Any compute job running on the login node, will terminated with any notice. Any long-running compilation
       or any long-running pre or post-processing of batch jobs must also be submitted to the queueing system.
@@ -89,22 +89,22 @@ User name               : &ltUser ID&gt </pre>
   <p>Cluster provides an introduction and user manual that can be accessed from the login node through the
    following command:
    <pre>$ man bw-grid</pre>
-   There user can find detailed information about work-spaces, queueing system, compute nodes, etc. 
-   Bellow a few basic steps will be described, to start working on the Esslinger bwGRiD cluster.  
+   There user can find detailed information about work-spaces, queueing system, compute nodes, etc.
+   Bellow a few basic steps will be described, to start working on the Esslinger bwGRiD cluster.
   </p>
   <h2>Home directory, workspaces and local scratch disks</h2>
   <p>By default a user's <kbd>$HOME</kbd> directory size is limited to a quota of 100MB. Users can not exceed
-   this disk space value and are required to create temporary workspaces for jobs which needs a larger 
-   amount of disk space. If for some reason, a project requires a larger amount of disk space in the 
+   this disk space value and are required to create temporary workspaces for jobs which needs a larger
+   amount of disk space. If for some reason, a project requires a larger amount of disk space in the
    <kbd>$HOME</kbd> directory, please contact your local grid admin on <kbd>dgrid-support@hs-esslingen.de</kbd>
   </p>
   <p>Command:
    <pre>$ ws_allocate &ltWORKSPACE_NAME&gt &ltPERIOD_OF_EXISTANCE_IN_DAYS&gt</pre>
-   allocates a new workspace, where <kbd>&ltWORKSPACE_NAME&gt</kbd> is a name of user's workspace which does 
+   allocates a new workspace, where <kbd>&ltWORKSPACE_NAME&gt</kbd> is a name of user's workspace which does
    not start with "-", and can not contain any special characters or spaces.
-   <kbd>&ltPERIOD_OF_EXISTANCE_IN_DAYS&gt</kbd> 
+   <kbd>&ltPERIOD_OF_EXISTANCE_IN_DAYS&gt</kbd>
    is the number of days a user want to have the workspace active. Maximum number of days that can be
-   allocated is 60. Further, the user can extend the active period of a workspace 16 times, with the 
+   allocated is 60. Further, the user can extend the active period of a workspace 16 times, with the
    following command:
    <pre>$ ws_extend &ltWORKSPACE_NAME&gt</pre>
    To list all your available workspaces and their expiration dates, use:
@@ -114,15 +114,15 @@ User name               : &ltUser ID&gt </pre>
   </p>
 
   <h2>Environment Modules</h2>
-  <p>In order to use different compilers, libraries or software packages  on the cluster, users are required 
-   to set specific environment variables for each session, which tells the cluster which version or package 
+  <p>In order to use different compilers, libraries or software packages  on the cluster, users are required
+   to set specific environment variables for each session, which tells the cluster which version or package
    the user intents to work with. This issue is handled with the help of <strong>Environment modules</strong>
    or short <strong>Modules</strong>. Through some predefined commands, cluster users can load,
-   unload, list, read help files of the installed modules on the cluster. 
+   unload, list, read help files of the installed modules on the cluster.
   </p>
-  <p><em>This section will be updated</em>, meanwhile you can visit 
+  <p><em>This section will be updated</em>, meanwhile you can visit
    <a target="_blank" href="http://www.bwhpc-c5.de/wiki/index.php/Environment_Modules">bwHPC-C5 wiki modules
     compartment</a>,
-   which describes the environment modules usage on HPC clusters in general, and is fully supported on 
+   which describes the environment modules usage on HPC clusters in general, and is fully supported on
    bwGRiD Esslingen as well.
   </p>

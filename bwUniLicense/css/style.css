@@ -68,7 +68,7 @@
 
   /* (en) Backup for correct positioning */
   /* (de) Absicherung korrekte Positionierung */
-  #header, #nav_bar, #main, #footer, #backnav, #nav { clear:both; }
+  #header, #nav_bar, #main, #footer, #nav { clear:both; }
 
  /*------------------------------------------------------------------------------------------------------*/
 
@@ -194,17 +194,13 @@
   align-items: center;
 }
 
-#nav, #backnav {
+.nav {
   padding: 3px;
 }
 
-#nav a, #backnav a {
+.nav a {
   color: #336699;
   text-decoration: none;
-}
-
-.w500 {
-  min-width: 500px;
 }
 
 pre {

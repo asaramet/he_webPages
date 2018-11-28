@@ -1,4 +1,8 @@
 <meta charset="utf-8">
-<link rel="stylesheet" href="css/main.css">
+<!--
+<link rel="stylesheet" href="css/main.css?<?= filemtime('css/main.css') ?>">
+<link rel="stylesheet" href="<?php $css_path = 'css/main.css'; echo $css_path.'?'.substr(md5_file($css_path), 0, 7); ?>">
+-->
+<link rel="stylesheet" href="css/style.css">
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
