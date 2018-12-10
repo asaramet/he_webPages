@@ -62,24 +62,7 @@
   export ANSYSLI_SERVERS=2325@localhost
 
   # Create the hosts file 'fluent.hosts'
-  if [[ $SLURM_JOB_NUM_NODES -gt 1 ]]; then
-    prefix="${SLURM_JOB_NODELIST:0:4}" &&
-    node_name=${prefix}"${SLURM_JOB_NODELIST:5:3}" &&
-    echo ${node_name} &gt fluent.hosts
-
-    let NODES_REM=SLURM_JOB_NUM_NODES &&
-    remainer="${SLURM_JOB_NODELIST:5}" &&
-    while [[ NODES_REM -ne 1 ]]; do
-      let NODES_REM=NODES_REM-1 &&
-      node_name=${prefix}"${remainer:4:3}" &&
-
-      echo ${node_name} &gt&gt fluent.hosts
-
-      remainer="${remainer:4}"
-    done
-  else
-    echo ${SLURM_JOB_NODELIST} &gt fluent.hosts
-  fi
+  scontrol show hostname ${SLURM_JOB_NODELIST} &gt fluent.hosts
 
   # set number of nodes variable
   nrNodes=${MOAB_PROCCOUNT}

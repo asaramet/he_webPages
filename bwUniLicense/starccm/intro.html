@@ -12,3 +12,12 @@
   you risk to block any STAR-CCM+ calculation made in "house" at the university, as the total number of licenses is limited,
   and using some of them for HPC jobs will put all the other machines at the university in a license queue, waiting for the HPC job to finish.
 </p>
+
+<h2>Wrapper to run STAR-CCM+ jobs on bwUniCluster</h2>
+<p>On bwUniCluster, SSH communication between nodes is blocked.</p>
+<p>Therefore, to be able to run a <kbd>multinode</kbd> job on the cluster: </p>
+  <ul>
+    <li> Load a specific wrapper:<pre>module load system/ssh_wrapper/0.1</pre></li>
+    <li>Set the required variable:<pre>export STARCCM_SSH=/opt/bwhpc/common/system/ssh_wrapper/0.1/ssh</pre> </li>
+    <li>Add <kbd>-rsh</kbd> option to start a job in bash mode:<pre>starccm+ -rsh $STARCCM_SSH -batch run</pre></li>
+  </ul>

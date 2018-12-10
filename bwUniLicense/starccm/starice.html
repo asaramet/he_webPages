@@ -1,4 +1,4 @@
-<h3>A batch script for a STAR-CCM+ job running with a POD-key license and a SSH tunnel.</h3>
+<h2>A batch script for a STAR-CCM+ job on a single node, with a POD-key license and SSH tunnel.</h2>
 <p>Lately SIEMENS starts providing some STAR-CCM+ addons, like STAR-ICE (engine simulation),
   which require a specific license check not provided by the POD manager.
 </p>
@@ -45,9 +45,9 @@
 
   # specify sim case file name
   CASE_NAME=test_case.sim
-  INPUT="$MOAB_SUBMITDIR"/$CASE_NAME
+  INPUT=${MOAB_SUBMITDIR}/${CASE_NAME}
 
-  # load the available STAR-CCM + module
+  # load the available STAR-CCM+ module
   module load cae/star-ccm+/$VERSION
 
   # start a SSH tunnel, creating a control socket.
@@ -64,7 +64,7 @@
   echo "number of nodes: $np"
 
   # start parallel star-ccm+ job
-  starccm+ -power -np $np -batch run $CASE_NAME
+  starccm+ -power -np $np -batch run $INPUT
 
   # close the SSH control socket
   ssh -S starccm-socket -O exit usidft01@comserver.hs-esslingen.de
