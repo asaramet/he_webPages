@@ -43,15 +43,12 @@
   # switch to the folder where 'msub' run:
   cd ${MOAB_SUBMITDIR}
 
-  # create hostsfile
-  scontrol show hostname ${SLURM_JOB_NODELIST} &gt starccm.hosts
+  # create hostslist
+  export jms_nodes=`srun hostname -s`
+  export hostslist=`echo $jms_nodes | sed "s/ /,/g"`
 
   # load the available STAR-CCM+ module
   module load cae/star-ccm+/$VERSION
-
-  # ssh wrapper:
-  module load system/ssh_wrapper/0.1
-  export STARCCM_SSH="/opt/bwhpc/common/system/ssh_wrapper/0.1/ssh"
 
   # set license variables: server address and POD key string
   export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
@@ -62,7 +59,7 @@
   echo "number of nodes: $np"
 
   # start parallel star-ccm+ job
-  starccm+ -power -np $np -rsh $STARCCM_SSH -machinefile starccm.hosts -batch run $INPUT
+  starccm+ -power -np ${np} -rsh ssh -mpi intel -on ${hostslist} -batch run ${INPUT}
 
   echo "Run completed at "
   date
