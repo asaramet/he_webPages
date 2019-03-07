@@ -1,0 +1,20 @@
+{
+  "name": "grid-app",
+  "version": "1.0.0",
+  "description": "try Angular",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "sync": "find . -maxdepth 1 -name 'bw*' -exec rsync -uavh {}/ asaramet@rzlx0900.hs-esslingen.de:~/.public_html/{}/ --delete-excluded \\;"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
