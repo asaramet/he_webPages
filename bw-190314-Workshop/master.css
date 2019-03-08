@@ -1,0 +1,121 @@
+html, body {
+  font-family: 'Muli', sans-serif;
+  color: #37474f;
+  height: 100%;
+  width: 100%;
+}
+
+kbd {
+  background-color: #fff;
+  color: #37474f;
+  font-family: 'Coda', cursive;
+}
+
+.slide_title {
+  margin-bottom: 2rem;
+}
+
+@media (max-width:767px) {
+}
+
+
+/* HEADER */
+header {
+  height: 8vh;
+  color: #90a4ae;
+}
+
+header div a img {
+  margin-right: 2rem;
+}
+
+/* FOOTER */
+footer {
+  justify-content: space-around;
+  height: 4vh;
+}
+footer h6 {
+  padding-top: 0.5rem;
+  color: #90a4ae;
+}
+
+/* CAROUSEL */
+#carousel {
+  height: calc(100% - 12vh);
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+#slides {
+  flex: 0 0 100%;
+  padding: 2rem;
+}
+
+#slides .fa-chevron-right,
+#slides .fa-chevron-left {
+  display: block;
+  color: #d0d3d4;
+  font-size: 3rem;
+  text-shadow: .6rem .3rem .7rem #90a4ae;
+}
+
+#slides .change_slide {
+  opacity: 0;
+}
+#slides .change_slide:hover {
+  opacity: 1;
+}
+
+/* front_page */
+#front_page h1 {
+  margin-top: 9rem;
+  margin-bottom: 5rem;
+  font-size: 3rem;
+}
+#front_page .container {
+  margin-top: 4rem;
+}
+#front_page .container .row {
+  margin-top: 3rem;
+}
+#front_page .container .row a {
+  margin-top: 1rem;
+}
+
+/* title page */
+#slides .tp_slide {
+  text-align: center;
+  font-size: 5rem;
+  padding-top: 20rem;
+}
+
+#slides .tp_slide h2 {
+  padding-top: 1rem;
+}
+
+/* explaning slide */
+.exp_slide  h1 {
+  margin-top: 7rem;
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.exp_slide h2 {
+  margin-top: 5rem;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.exp_slide a {
+  margin-top: 5rem;
+  text-align: center;
+}
+
+/* description slide */
+.desc_slide h1 {
+  margin-bottom: 3rem;
+  text-align: left;
+}

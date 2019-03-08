@@ -2,9 +2,73 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+    crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
+  <link rel="stylesheet" href="master.css">
   <title>HAW Workshop 14.03.2019</title>
 </head>
 <body>
-  <h1>HAW Workshop 14.03.2019</h1>
+  <header class="navbar navbar-light bg-light flex-nowrap">
+    <div style="margin-left: 1rem;">
+      <a href="http://www.bwhpc.de"><img src="img/bwhpc_logo_long.png" alt="bwHPC-C5 logo" style="height: 5vh"></a>
+      <a href="http://www.hs-esslingen.de" class="d-none d-sm-inline"><img src="img/he_logo.png" alt="Hochschule Esslingen logo" style="width: 10rem"></a>
+    </div>
+    <h3 class="d-none d-lg-inline" style="margin-right: 1rem; text-align:right;">
+      Licenses on bwUniCluster
+    </h3>
+  </header>
+  <section id='carousel' class="row d-flex flex-nowrap">
+    <div id="slides" class="carousel slide" data-ride="carousel" data-interval="false">
+      <div class="carousel-inner">
+        <!-- FRONT PAGE -->
+        <div class="carousel-item active" id="front_page" style="text-align:center;">
+          <h1>FRONT Page</h1>
+        </div>
+        <!-- END FRONT PAGE -->
+        <div class="carousel-item tp_slide">
+          <h2>Title page</h2>
+        </div>
+        <div class="carousel-item exp_slide">
+          <h1>Explanation slide</h1>
+        </div>
+        <div class="carousel-item desc_slide">
+          <h1>Description slide</h1>
+        </div>
+      </div>
+      <a class="carousel-control-prev change_slide" href="#slides" role="button" data-slide="prev">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next change_slide" href="#slides" role="button" data-slide="next">
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <footer class="row d-flex flex-nowrap fixed-bottom">
+    <h6>13.10.2017</h6>
+    <h6 class="d-none d-md-inline">bwHPC/bwUniCluster Nutzerworkshop HAW</h6>
+    <h6>&copy; 2019 Alexandru Saramet</h6>
+  </footer>
+  <!-- END FOOTER -->
+
+  <!-- Bootstrap JS: jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 </body>
 </html>
