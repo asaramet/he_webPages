@@ -15,9 +15,6 @@ kbd {
   margin-bottom: 2rem;
 }
 
-@media (max-width:767px) {
-}
-
 /* HEADER */
 header {
   height: 8vh;
@@ -92,7 +89,6 @@ footer h6 {
   text-align: left;
   margin-top: 8rem;
   margin-left: 8rem;
-  margin-right: 2rem;
 }
 #slides .desc_slide h1 {
   font-size: 3rem;
@@ -105,4 +101,18 @@ footer h6 {
 #slides .desc_slide ul {
   font-size: 2rem;
   list-style-type: circle;
+}
+
+@media screen and (max-width: 1600px) {
+  #slides .desc_slide {
+    margin-top: 4rem;
+    margin-left: 2rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  #slides .desc_slide {
+    margin-top: 3rem;
+    margin-left: 1rem;
+  }
 }
