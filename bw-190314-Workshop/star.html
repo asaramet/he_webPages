@@ -1,0 +1,19 @@
+<pre>
+  #!/bin/bash
+  module load cae/star-ccm+/12.06.011
+
+  # start a SSH tunnel, creating a control socket.
+  ssh -MS starccm-socket -fnNT -L 1999:lizenz-cd-adapco.hs-esslingen.de:1999 \
+  -L 49296:lizenz-cd-adapco.hs-esslingen.de:49296 \
+  usidft01@comserver.hs-esslingen.de
+
+  # set license variables: server address and POD key string
+  export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com;1999@localhost
+  export LM_PROJECT=some123key040oops55od
+
+  # start parallel star-ccm+ job
+  starccm+ -power -np $MOAB_PROCCOUNT -batch caseName.sim
+
+  # close the SSH control socket
+  ssh -S starccm-socket -O exit usidft01@comserver.hs-esslingen.de
+</pre>

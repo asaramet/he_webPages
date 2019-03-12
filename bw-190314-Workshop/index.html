@@ -17,29 +17,102 @@
 <body>
   <header class="navbar navbar-light bg-light flex-nowrap">
     <div style="margin-left: 1rem;">
-      <a href="http://www.bwhpc.de"><img src="img/bwhpc_logo_long.png" alt="bwHPC-C5 logo" style="height: 5vh"></a>
-      <a href="http://www.hs-esslingen.de" class="d-none d-sm-inline"><img src="img/he_logo.png" alt="Hochschule Esslingen logo" style="width: 10rem"></a>
+      <a href="http://www.bwhpc.de" target="_blank"><img src="img/bwhpc_logo_long.png" alt="bwHPC logo" style="height: 5vh"></a>
+      <a href="http://www2.hs-esslingen.de/~asaramet/bwUniLicense" target="_blank" class="d-none d-sm-inline"><img src="img/he_logo.png" alt="Hochschule Esslingen logo" style="width: 10rem"></a>
     </div>
     <h3 class="d-none d-lg-inline" style="margin-right: 1rem; text-align:right;">
-      Licenses on bwUniCluster
+      Licensed Software on bwUniCluster
     </h3>
   </header>
   <section id='carousel' class="row d-flex flex-nowrap">
     <div id="slides" class="carousel slide" data-ride="carousel" data-interval="false">
       <div class="carousel-inner">
         <!-- FRONT PAGE -->
-        <div class="carousel-item active" id="front_page" style="text-align:center;">
-          <h1>FRONT Page</h1>
+        <div class="carousel-item active" id="front_page">
+          <h1>Licensed Software on bwUniCluster</h1>
+          <h1><i class="fas fa-file-invoice-dollar"></i></h1>
+          <h3>Alexandru Saramet</h3>
         </div>
         <!-- END FRONT PAGE -->
         <div class="carousel-item tp_slide">
-          <h2>Title page</h2>
+          <h1><a href="https://www.bwhpc-c5.de/wiki/index.php/Main_Page"
+            target="_blank" style="color:inherit;">
+            bwHPC Wiki</a></h1>
+          <h1><i class="fab fa-wikipedia-w"></i></h1>
+          <h3><a href="https://www.bwhpc-c5.de/wiki/index.php/BwUniCluster_Environment_Modules" target="_blank">Modules</a> /
+            <a href="https://www.bwhpc-c5.de/wiki/index.php/OpenFoam" target="_blank">OpenFOAM</a> /
+            <a href="https://www.bwhpc-c5.de/wiki/index.php/Ansys" target="_blank">ANSYS</a>
+          </h3>
         </div>
-        <div class="carousel-item exp_slide">
-          <h1>Explanation slide</h1>
+        <div class="carousel-item tp_slide">
+          <h1><a href="https://cis-hpc.uni-konstanz.de/" target="_blank"
+            style="color:inherit;">Cluster Information System</a></h1>
+          <h1><i class="fas fa-sitemap"></i></h1>
+          <h3>Open Source / Commercial</h3>
         </div>
         <div class="carousel-item desc_slide">
-          <h1>Description slide</h1>
+          <h1>Commercial software licensing:</h1>
+          <ul>
+            <li>Basic restirctions (copyright, right to modify, right to distribute, etc.)</li>
+            <li>Volume licensing (software used on large number of computers)</li>
+            <li>Contractual license program (certain number of licenses over a fixed period of time)</li>
+            <li>Licensing per concurent / floating user (specific number of users have access at the same time)</li>
+            <li>Licensing per server / site (nodes or CPU-hours, regardles of number of users)</li>
+          </ul>
+        </div>
+        <div class="carousel-item desc_slide">
+          <h1>University managed license servers</h1>
+          <ul>
+            <li>Server Hostname / IP</li>
+            <li>Open ports</li>
+            <li>License key / file</li>
+          </ul>
+          <h2>Common software instalation path: <kbd>/opt/bwhpc/common/[TYPE]</kbd> </h2>
+          <h2>Uni specific software instalation path: <kbd>/opt/bwhpc/[UNI-PREFIX]/[TYPE]</kbd> </h2>
+        </div>
+        <div class="carousel-item desc_slide">
+          <h1>SSH tunnel (port forwarding)</h1>
+          <ul>
+            <li>SSH connection from bwUniCluster to an intermediate server / PC (Port 22)
+              <ul><li>Key based secure authentication
+                <ul>
+                  <li><kbd>$ ssh-keygen</kbd></li>
+                  <li><kbd>$ ssh-copy-id -i ~/.ssh/id_rsa.pub &ltUSER_ID&gt@&ltCOM_HOSTNAME&gt</kbd></li>
+                </ul>
+              </li></ul>
+            </li>
+            <li>License server access from the intermediate PC through dedicated ports</li>
+          </ul>
+        </div>
+        <div class="carousel-item desc_slide">
+          <h3 id="ssh-gr"></h3>
+        </div>
+        <div class="carousel-item desc_slide">
+          <h1>SSH port forwarding command options:</h1>
+          <ul>
+            <li><kbd>-M</kbd>: Places the ssh client into “master” mode for connection sharing</li>
+            <li><kbd>-S ctl_path</kbd>: Specifies the location of a control socket for connection sharing</li>
+            <li><kbd>-L [bind_address:]port:host:hostport</kbd>: Specifies port and host on the server to be redirected to local hostport</li>
+            <li><kbd>-N</kbd>: Do not execute a remote command</li>
+            <li><kbd>-n</kbd>: Prevents reading from stdin</li>
+            <li><kbd>-f</kbd>: Requests ssh to go to background just before command execution</li>
+            <li><kbd>-T</kbd>: Disable pseudo-terminal allocation</li>
+            <li><kbd>-O ctl_cmd</kbd>:Control an active connection multiplexing master process
+              <ul>
+                <li><kbd>check</kbd>: check that the master process is running</li>
+                <li><kbd>forward</kbd>: request forwardings without command execution</li>
+                <li><kbd>exit</kbd>: request the master to exit</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="carousel-item desc_slide">
+          <h1>ANSYS Fluent job script with a SSH tunnel</h1>
+          <h3 id="ansys"></h3>
+        </div>
+        <div class="carousel-item desc_slide">
+          <h1>STAR-CCM+ job script with a SSH tunnel</h1>
+          <h3 id="star"></h3>
         </div>
       </div>
       <a class="carousel-control-prev change_slide" href="#slides" role="button" data-slide="prev">
@@ -54,21 +127,31 @@
   </section>
   <!-- FOOTER -->
   <footer class="row d-flex flex-nowrap fixed-bottom">
-    <h6>13.10.2017</h6>
+    <h6>14.03.2019</h6>
     <h6 class="d-none d-md-inline">bwHPC/bwUniCluster Nutzerworkshop HAW</h6>
     <h6>&copy; 2019 Alexandru Saramet</h6>
   </footer>
   <!-- END FOOTER -->
 
   <!-- Bootstrap JS: jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
+  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#ssh-gr").load("ssh-gr.html");
+      $("#star").load("star.html");
+      $("#ansys").load("ansys.html");
+    });
+  </script>
 </body>
 </html>

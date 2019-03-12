@@ -18,7 +18,6 @@ kbd {
 @media (max-width:767px) {
 }
 
-
 /* HEADER */
 header {
   height: 8vh;
@@ -69,53 +68,41 @@ footer h6 {
 }
 
 /* front_page */
+#front_page, #slides .tp_slide{
+  margin-top: 8rem;
+  text-align: center;
+}
 #front_page h1 {
-  margin-top: 9rem;
   margin-bottom: 5rem;
-  font-size: 3rem;
-}
-#front_page .container {
-  margin-top: 4rem;
-}
-#front_page .container .row {
-  margin-top: 3rem;
-}
-#front_page .container .row a {
-  margin-top: 1rem;
+  font-size: 5.5rem;
 }
 
 /* title page */
-#slides .tp_slide {
-  text-align: center;
-  font-size: 5rem;
-  padding-top: 20rem;
-}
-
-#slides .tp_slide h2 {
-  padding-top: 1rem;
-}
-
-/* explaning slide */
-.exp_slide  h1 {
-  margin-top: 7rem;
+#slides .tp_slide h1 {
   font-size: 4rem;
-  font-weight: bold;
-  text-align: center;
-}
-
-.exp_slide h2 {
-  margin-top: 5rem;
   margin-bottom: 3rem;
-  text-align: center;
 }
-
-.exp_slide a {
-  margin-top: 5rem;
-  text-align: center;
+#slides .tp_slide h2 {
+  font-size: 2.5rem;
+  margin: 2rem;
 }
 
 /* description slide */
-.desc_slide h1 {
-  margin-bottom: 3rem;
+#slides .desc_slide {
   text-align: left;
+  margin-top: 8rem;
+  margin-left: 8rem;
+  margin-right: 2rem;
+}
+#slides .desc_slide h1 {
+  font-size: 3rem;
+  margin-bottom: 3rem;
+}
+#slides .desc_slide h2 {
+  font-size: 2.5rem;
+  margin-top: 2rem;
+}
+#slides .desc_slide ul {
+  font-size: 2rem;
+  list-style-type: circle;
 }

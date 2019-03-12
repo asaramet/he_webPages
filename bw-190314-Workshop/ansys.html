@@ -1,0 +1,19 @@
+<pre>
+  #!/bin/bash
+  module load cae/ansys/18.2
+
+  # start a SSH tunnel, creating a control socket.
+  ssh -M -S ansys-socket -fnNT -L 2325:lizenz-ansys-kit.hs-esslingen.de:2325 \
+  -L 1055:lizenz-ansys-kit.hs-esslingen.de:1055 \
+  -L 49296:lizenz-ansys-kit.hs-esslingen.de:49296 \
+  usidft01@comserver.hs-esslingen.de
+
+  export ANSYSLMD_LICENSE_FILE=1055@localhost
+  export ANSYSLI_SERVERS=2325@localhost
+
+  fluent 3d -t${MOAB_PROCCOUNT} -g -env -pib -mpi=intel \
+  -cnf=`scontrol show hostname ${SLURM_JOB_NODELIST}` -i fluentJournal.jou &&
+
+  # close the SSH control socket
+  ssh -S ansys-socket -O exit usidft01@comserver.hs-esslingen.de
+</pre>
