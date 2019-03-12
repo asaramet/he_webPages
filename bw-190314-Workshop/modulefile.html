@@ -1,0 +1,23 @@
+<pre>
+#%Module1.0
+#
+# Module:          cae/openfoam/6
+# Priority:        optional
+
+set            version         "6"
+set            base_dir        "/opt/bwhpc/common/cae/openfoam/$version"
+setenv         FOAM_INIT       "$base_dir/OpenFOAM-$version/etc/bashrc"
+set-alias      foamInit        "source $base_dir/OpenFOAM-$version/etc/bashrc"
+set            loading         [module-info mode load]
+
+if { $loading && ![ is-loaded mpi/openmpi/3.1-gnu-8.2 ] } {
+    if { [ is-loaded "mpi" ] } {
+        puts stderr "Unloading 'mpi'"
+        module unload mpi
+    }
+puts stderr "Loading module dependency 'mpi/openmpi/3.1-gnu-8.2'"
+module load mpi/openmpi/3.1-gnu-8.2
+}
+
+module-whatis    "Open Source CFD Toolbox OpenFOAM version $version"
+</pre>

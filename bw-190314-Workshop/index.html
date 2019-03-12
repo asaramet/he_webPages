@@ -67,8 +67,23 @@
             <li>Open ports</li>
             <li>License key / file</li>
           </ul>
-          <h2>Common software instalation path: <kbd>/opt/bwhpc/common/[TYPE]</kbd> </h2>
-          <h2>Uni specific software instalation path: <kbd>/opt/bwhpc/[UNI-PREFIX]/[TYPE]</kbd> </h2>
+        </div>
+        <div class="carousel-item desc_slide">
+          <h1>Modules package</h1>
+          <ul>
+            <li>Common software instalation path: <kbd>/opt/bwhpc/common/[TYPE]</kbd></li>
+            <li>Uni specific software instalation path: <kbd>/opt/bwhpc/[UNI-PREFIX]/[TYPE]</kbd></li>
+            <li>Uni specific modulefiles path: <kbd>/opt/bwhpc/[UNI-PREFIX]/modulefiles/[TYPE]</kbd></li>
+          </ul>
+          <h1 style="margin-top: 2rem;">Modulefile - file containing Tcl code for the Modules package</h1>
+        </div>
+        <div class="carousel-item desc_slide">
+          <h3 id="modulefile"></h3>
+        </div>
+        <div class="carousel-item desc_slide">
+          <h1>Wrapper for passwordless remote shell on UC1, FH1, FH2</h1>
+          <h2><kbd>$ module load system/ssh_wrapper/0.1</kbd></h2>
+          <h2><kbd>$ export FLUENT_SSH=/opt/bwhpc/common/system/ssh_wrapper/0.1/ssh</kbd></h2>
         </div>
         <div class="carousel-item desc_slide">
           <h1>SSH tunnel (port forwarding)</h1>
@@ -151,6 +166,7 @@
       $("#ssh-gr").load("ssh-gr.html");
       $("#star").load("star.html");
       $("#ansys").load("ansys.html");
+      $("#modulefile").load("modulefile.html");
     });
   </script>
 </body>
