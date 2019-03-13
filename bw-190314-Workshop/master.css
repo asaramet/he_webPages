@@ -116,3 +116,12 @@ footer h6 {
     margin-left: 1rem;
   }
 }
+
+@media screen and (max-height: 770px) {
+  #front_page, #slides .tp_slide {
+    margin-top: 2.5rem;
+  }
+  #slides .desc_slide {
+    margin-top: 1rem;
+  }
+}
