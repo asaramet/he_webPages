@@ -39,8 +39,16 @@
             target="_blank" style="color:inherit;">
             bwHPC Wiki</a></h1>
           <h1><i class="fab fa-wikipedia-w"></i></h1>
-          <h3><a href="https://www.bwhpc-c5.de/wiki/index.php/BwUniCluster_Environment_Modules" target="_blank">Modules</a> /
-            <a href="https://www.bwhpc-c5.de/wiki/index.php/OpenFoam" target="_blank">OpenFOAM</a> /
+          <h3>
+            <a href="https://www.bwhpc-c5.de/wiki/index.php/BwUniCluster_Hardware_and_Architecture#File_Systems"
+              target="_blank">File System</a> |
+            <a href="https://www.bwhpc-c5.de/wiki/index.php/Batch_Jobs"
+              target="_blank">Queuing System</a> |
+            <a href="https://www.bwhpc-c5.de/wiki/index.php/BwUniCluster_Environment_Modules"
+              target="_blank">Modules</a>
+          </h3>
+          <h3>
+            <a href="https://www.bwhpc-c5.de/wiki/index.php/OpenFoam" target="_blank">OpenFOAM</a> |
             <a href="https://www.bwhpc-c5.de/wiki/index.php/Ansys" target="_blank">ANSYS</a>
           </h3>
         </div>
@@ -74,6 +82,7 @@
             <li>Common software instalation path: <kbd>/opt/bwhpc/common/[TYPE]</kbd></li>
             <li>Uni specific software instalation path: <kbd>/opt/bwhpc/[UNI-PREFIX]/[TYPE]</kbd></li>
             <li>Uni specific modulefiles path: <kbd>/opt/bwhpc/[UNI-PREFIX]/modulefiles/[TYPE]</kbd></li>
+            <li>Example: <kbd>/opt/bwhpc/es/modulefile/cae/ansys/18.1</kbd></li>
           </ul>
           <h1 style="margin-top: 2rem;">Modulefile - file containing Tcl code for the Modules package</h1>
         </div>
@@ -86,7 +95,16 @@
           <h2><kbd>$ export FLUENT_SSH=/opt/bwhpc/common/system/ssh_wrapper/0.1/ssh</kbd></h2>
         </div>
         <div class="carousel-item desc_slide">
+          <h1>Issues with uni specific modules</h1>
+          <ul>
+            <li>Need an open access from bwUniCluster to the license server</li>
+            <li>Open ports for everyone</li>
+            <li>Academical license restrictions</li>
+          </ul>
+        </div>
+        <div class="carousel-item desc_slide">
           <h1>SSH tunnel (port forwarding)</h1>
+          <h2>A method of transporting arbitrary networking data over an encrypted SSH connection</h2>
           <ul>
             <li>SSH connection from bwUniCluster to an intermediate server / PC (Port 22)
               <ul><li>Key based secure authentication
