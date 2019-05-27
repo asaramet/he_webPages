@@ -13,72 +13,72 @@
   For cleanness let's assume a hypothetical HE user with an HE user id: <kbd>usidft01</kbd>
 </p>
 <p><pre>
-  #!/bin/bash
-  #
-  # Number of cores and processors to use
-  #MSUB -l nodes=1:ppn=8
-  #MSUB -l pmem=6000mb
-  #
-  # Time to run
-  #MSUB -l walltime=02:00:00
+#!/bin/bash
+#
+# Number of cores and processors to use
+#MSUB -l nodes=1:ppn=8
+#MSUB -l pmem=6000mb
+#
+# Time to run
+#MSUB -l walltime=02:00:00
 
-  # define the queue class: singlenode, multinode, verylong, fat etc.
-  # more info: http://www.bwhpc-c5.de/wiki/index.php/Batch_Jobs_-_bwUniCluster_Features#msub_-q_queues
-  #MSUB -q singlenode
-  #
-  # Name of the job
-  #MSUB -N fluent-test
-  #
-  # set a log file for job's output
-  #MSUB -o test_simple.log
-  #
-  # send an e-mail when a job begins, aborts or ends
-  #MSUB -m abe
-  # e-mail address specification
-  #MSUB -M usidft01@hs-esslingen.de
+# define the queue class: singlenode, multinode, verylong, fat etc.
+# more info: http://www.bwhpc-c5.de/wiki/index.php/Batch_Jobs_-_bwUniCluster_Features#msub_-q_queues
+#MSUB -q singlenode
+#
+# Name of the job
+#MSUB -N fluent-test
+#
+# set a log file for job's output
+#MSUB -o test_simple.log
+#
+# send an e-mail when a job begins, aborts or ends
+#MSUB -m abe
+# e-mail address specification
+#MSUB -M usidft01@hs-esslingen.de
 
-  # Switches to the directory from which the "qsub" command run:
-  cd $MOAB_SUBMITDIR
+# Switches to the directory from which the "qsub" command run:
+cd $MOAB_SUBMITDIR
 
-  echo "Starting at "
-  date
+echo "Starting at "
+date
 
-  # load the software package
-  module load cae/ansys/18.2
+# load the software package
+module load cae/ansys/18.2
 
-  # wrapper to set the required ssh nodes communication
-  module load system/ssh_wrapper/0.1
-  export FLUENT_SSH=/opt/bwhpc/common/system/ssh_wrapper/0.1/ssh
-  export FLUENT_SKIP_SSH_CHECK=1
+# wrapper to set the required ssh nodes communication
+module load system/ssh_wrapper/0.1
+export FLUENT_SSH=/opt/bwhpc/common/system/ssh_wrapper/0.1/ssh
+export FLUENT_SKIP_SSH_CHECK=1
 
-  # start a SSH tunnel, creating a control socket.
-  ssh -M -S ansys-socket -fnNT -L 2325:lizenz-ansys-kit.hs-esslingen.de:2325 \
-  -L 1055:lizenz-ansys-kit.hs-esslingen.de:1055 \
-  -L 49296:lizenz-ansys-kit.hs-esslingen.de:49296 \
-  usidft01@comserver.hs-esslingen.de
+# start a SSH tunnel, creating a control socket.
+ssh -M -S ansys-socket -fnNT -L 2325:lizenz-ansys-kit.hs-esslingen.de:2325 \
+-L 1055:lizenz-ansys-kit.hs-esslingen.de:1055 \
+-L 49296:lizenz-ansys-kit.hs-esslingen.de:49296 \
+usidft01@comserver.hs-esslingen.de
 
-  # export license environment variables
-  export ANSYSLMD_LICENSE_FILE=1055@localhost
-  export ANSYSLI_SERVERS=2325@localhost
+# export license environment variables
+export ANSYSLMD_LICENSE_FILE=1055@localhost
+export ANSYSLI_SERVERS=2325@localhost
 
-  # Create the hosts file 'fluent.hosts'
-  scontrol show hostname ${SLURM_JOB_NODELIST} &gt fluent.hosts
+# Create the hosts file 'fluent.hosts'
+scontrol show hostname ${SLURM_JOB_NODELIST} &gt fluent.hosts
 
-  # set number of nodes variable
-  nrNodes=${MOAB_PROCCOUNT}
+# set number of nodes variable
+nrNodes=${MOAB_PROCCOUNT}
 
-  echo "number of nodes: $nrNodes"
+echo "number of nodes: $nrNodes"
 
-  # run fluent in parallel, where fluentJournal.jou is a fluent Journal File
-  # more about creating Journal Files:
-  # https://www.sharcnet.ca/Software/Ansys/16.2.3/en-us/help/flu_ug/flu_ug_JournalFile.html
+# run fluent in parallel, where fluentJournal.jou is a fluent Journal File
+# more about creating Journal Files:
+# https://www.sharcnet.ca/Software/Ansys/16.2.3/en-us/help/flu_ug/flu_ug_JournalFile.html
 
-  echo "Starting fluent..."
-  fluent 3d -t$nrNodes -g -env -pib -mpi=intel -cnf=fluent.hosts -i fluentJournal.jou &&
+echo "Starting fluent..."
+fluent 3d -t$nrNodes -g -env -pib -mpi=intel -cnf=fluent.hosts -i fluentJournal.jou &&
 
-  # close the SSH control socket
-  ssh -S ansys-socket -O exit usidft01@comserver.hs-esslingen.de
+# close the SSH control socket
+ssh -S ansys-socket -O exit usidft01@comserver.hs-esslingen.de
 
-  echo "Run completed at "
-  date
+echo "Run completed at "
+date
 </pre></p>
