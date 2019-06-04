@@ -46,11 +46,6 @@ date
 # load the software package
 module load cae/ansys/18.2
 
-# wrapper to set the required ssh nodes communication
-module load system/ssh_wrapper/0.1
-export FLUENT_SSH=/opt/bwhpc/common/system/ssh_wrapper/0.1/ssh
-export FLUENT_SKIP_SSH_CHECK=1
-
 # start a SSH tunnel, creating a control socket.
 ssh -M -S ansys-socket -fnNT -L 2325:lizenz-ansys-kit.hs-esslingen.de:2325 \
 -L 1055:lizenz-ansys-kit.hs-esslingen.de:1055 \
