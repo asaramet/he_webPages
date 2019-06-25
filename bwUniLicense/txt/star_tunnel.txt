@@ -1,15 +1,3 @@
-<h2>A batch script for a STAR-CCM+ job on a single node, with a POD-key license and SSH tunnel.</h2>
-<p>Lately SIEMENS starts providing some STAR-CCM+ addons, like STAR-ICE (engine simulation),
-  which require a specific license check not provided by the POD manager.
-</p>
-<p>In such cases the user needs access to the HE license manager to check if the addon is eligible to run in STAR-CCM+ environment.</p>
-<p>A SSH tunnel listening to <kbd>lizenz-cd-adapco.hs-esslingen.de</kbd> on ports 1999 and a FLEXlm deamon port set to variable, DEAMON_PORT, is therfore required</p>
-<p>The script will be similar to the POD one, adding the SSH tunnel and mentioning it in the license server check variable.</p>
-
-<p>The job will run on a single node, 8 processors, 8gb RAM, with STAR-CCM+ v.12.06.011, using a POD-key license.</p>
-<p>We are assuming the job is started by a Esslingen user with the user id: <kbd>usidfs01</kbd></p>
-<p>And the user POD key will be a string <kbd>sum829key020oops22od</kbd></p>
-<p><pre>
 #!/bin/bash
 #
 # Number of cores and processors to use
@@ -72,4 +60,3 @@ ssh -S starccm-socket -O exit usidft01@comserver.hs-esslingen.de
 
 echo "Run completed at "
 date
-</pre></p>
