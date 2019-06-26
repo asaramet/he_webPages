@@ -1,9 +1,4 @@
-<h2>ANSYS CFX jobs on bwGRiD Cluster, Esslingen</h2>
-  <p>A job script to submit a batch job called <em>job_cfx.txt</em> that runs <em>cfx solver</em>
-    with ANSYS version 16.0, on 8 processors up to maximum 6 hours and has an input file
-    named <em>cfxInput.def</em> looks like:
-  </p>
-  <p><pre>#!/bin/bash
+#!/bin/bash
 #number of processors to run a job ncpus=nodes*ppn
 #PBS -l nodes=1:ppn=8:mem24gb
 
@@ -52,9 +47,4 @@ cfx5solve -batch -def $INPUTFILE -par-host-list $HOSTS -part $nrNodes -start-met
 
 #some post processing info:
 echo "Run completed at "
-date</pre></p>
-
-<p>To start the job on the cluster, from the directory where your <em>job_cfx.sh</em> is, do:
-<pre>$ qsub job_cfx.txt</pre></p>
-<p>You don't need to define any extra variables as everything is already defined in the <em>job_cfx.sh</em>
-header, through <kbd>#PBS </kbd> keywords.</p>
+date

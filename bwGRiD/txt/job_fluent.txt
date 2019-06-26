@@ -1,9 +1,4 @@
-<h2>ANSYS FLUENT jobs on bwGRiD Cluster, Esslingen</h2>
-  <p>A job script to submit a batch job called <em>job_fluent.txt</em> that runs <em>fluent</em>
-    with ANSYS version 16.0, on 8 processors up to maximum 6 hours and has an input file
-    named <em>fluentInput.inp</em> looks like:
-  </p>
-  <p><pre>#!/bin/bash
+#!/bin/bash
 #number of processors to run a job ncpus=nodes*ppn
 #PBS -l nodes=1:ppn=8:mem24gb
 
@@ -48,9 +43,4 @@ fluent 3d -t$nrNodes -rsh=ssh -g -pib -mpi=openmpi -cnf=fluent.hosts -i fluentIn
 
 #some post processing info:
 echo "Run completed at "
-date</pre></p>
-
-<p>To start the job on the cluster, from the directory where your <em>job_fluent.sh</em> is, do:
-<pre>$ qsub job_fluent.txt</pre></p>
-<p>You don't need to define any extra variables as everything is already defined in the <em>job_fluent.sh</em>
-header, through <kbd>#PBS </kbd> keywords.</p>
+date

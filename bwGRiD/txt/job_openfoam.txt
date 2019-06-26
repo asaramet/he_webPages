@@ -1,0 +1,43 @@
+#!/bin/bash
+#number of processors to run a job ncpus=nodes*ppn
+#PBS -l nodes=1:ppn=8:mem24gb
+
+#wall time (up to 24 hours)
+#PBS -l walltime=06:00:00
+
+#name of the job
+#PBS -N test_icoFoam
+
+#set a log file for job's output
+#PBS -o parallelRun.log
+#PBS -j oe
+
+#send an e-mail when a job begins, aborts or ends
+#PBS -m abe
+#e-mail address specification
+#PBS -M user@uni.de
+
+#specify the OpenFOAM version and solver to run
+OPENFOAM_VERSION="2.4.0"
+EXECUTABLE="icoFoam"
+
+#switches to the directory from which 'qsub' command run:
+cd $PBS_O_WORKDIR
+
+#load the OpenFOAM module and source it
+module load cae/openfoam/$OPENFOAM_VERSION
+source $FOAM_INIT
+
+#start the solver
+echo "Starting at: "
+date
+
+[[ !( -d logs) ]] && mkdir logs -p
+
+decomposePar &> logs/decomposePar.log &&
+mpiexec $EXECUTABLE -parallel &> logs/$EXECUTABLE.log &&
+reconstructPar &> logs/reconstructPar.log &&
+rm -rf processor*
+
+echo "Run completed at: "
+date

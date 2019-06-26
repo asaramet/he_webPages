@@ -1,8 +1,8 @@
 <h1>OpenFOAM on bwGRiD Cluster, Esslingen</h1>
   <h2>Accessing and basic usage</h2>
-    <p>To view which OpenFOAM modules are available on the cluster, run the 
+    <p>To view which OpenFOAM modules are available on the cluster, run the
       following command:
-      <pre>$ module avail cae/openfoam</pre> 
+      <pre>$ module avail cae/openfoam</pre>
     </p>
     <p>To load the appropriate version (if available), run:
       <pre>$ module load cae/openfoam/&ltversion&gt</pre>
@@ -15,24 +15,24 @@
       <pre>$ foamInit</pre>
     </p>
   <h2>Building an OpenFOAM batch file for parallel processing</h2>
-    <p>To run any job in a parallel mode with OpenFOAM, the geometry domain should be decomposed into 
-      segments, equal to the number of processors you intend to use. That means, for example, a mesh of 
-      a case which will run on 8 processors, must first be decomposed into 8 segments. 
+    <p>To run any job in a parallel mode with OpenFOAM, the geometry domain should be decomposed into
+      segments, equal to the number of processors you intend to use. That means, for example, a mesh of
+      a case which will run on 8 processors, must first be decomposed into 8 segments.
       Then the solver is run in <em>parallel</em> mode, concurrently on these 8 segments, each processor
-      responding for one segment of the mesh, sharing the data with all other processors in between. There 
-      is a built in mechanism which properly connects the generated data on each segment to avoid the 
+      responding for one segment of the mesh, sharing the data with all other processors in between. There
+      is a built in mechanism which properly connects the generated data on each segment to avoid the
       possible errors.
     </p>
-    <p>Mesh decomposition is handled by <kbd>decomposePar</kbd> utility. The number of parts to decompose 
+    <p>Mesh decomposition is handled by <kbd>decomposePar</kbd> utility. The number of parts to decompose
       the geometry domain as well as the method to do so is defined in <kbd>system/decomposeParDict</kbd>
       file, in your OpenFOAM case folder.
     </p>
   <h2>OpenFOAM job scripts</h2>
-    <p><strong>Attention: </strong><kbd>openfoam</kbd> module loads automatically the necessary 
+    <p><strong>Attention: </strong><kbd>openfoam</kbd> module loads automatically the necessary
       <kbd>openmpi</kbd> module for parallel run. Do <strong>NOT</strong> load another <kbd>openmpi</kbd>
-      version, as it may conflict with the loaded one. 
+      version, as it may conflict with the loaded one.
     </p>
-    <p>A job script to submit a batch job called <em>job_openfoam.sh</em> that runs the <em>icoFoam</em>
+    <p>A job script to submit a batch job called <em>job_openfoam.txt</em> that runs the <em>icoFoam</em>
       solver with OpenFOAM version 2.4.0, on 8 processors up to maximum 6 hours looks like:
     </p>
     <p><pre>#!/bin/bash
@@ -45,7 +45,7 @@
 #name of the job
 #PBS -N test_icoFoam
 
-#set a log file for job's output 
+#set a log file for job's output
 #PBS -o parallelRun.log
 #PBS -j oe
 
@@ -53,7 +53,7 @@
 #PBS -m abe
 #e-mail address specification
 #PBS -M user@uni.de
-    
+
 #specify the OpenFOAM version and solver to run
 OPENFOAM_VERSION="2.4.0"
 EXECUTABLE="icoFoam"
