@@ -1,0 +1,19 @@
+<h2>Chain multiple OpenFOAM jobs</h2>
+  <p>To run the same pbs script multiple times one after the other is finished, for example the walltime is exceeded,
+  you may use a bash script as shown below.</p>
+  <p>A job named <kbd>start_OF.qsub</kbd> will be submited to run 4 times one after another with
+    the following bash script:</p>
+
+  <p><pre>#!/usr/bin/env bash
+
+pbs_script="start_OF.qsub"
+number_of_jobs=4
+
+submit=$(qsub ${pbs_script})
+echo ${submit}
+
+for id in seq 1 ${number_of_jobs}; do
+  submit=$(qsub -l depend=afternotok:${submit} ${pbs_script})
+done</pre></p>
+
+<p><strong>Note:</strong> the OpenFOAM case you run in the pbs script should be already decomposed and reconstructed only after all the jobs are finished</p>
