@@ -36,8 +36,8 @@ date
 module load cae/ansys/$VERSION
 
 #create the hosts file to run fluent on:
-echo $(cat $PBS_NODEFILE) > fluent.hosts
-echo '''' >> fluent.hosts
+echo $(cat $PBS_NODEFILE) &gt; fluent.hosts
+echo '''' &gt;&gt; fluent.hosts
 
 #calculate number of nodes
 nrNodes=$(cat $PBS_NODEFILE |wc -l)

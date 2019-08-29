@@ -71,9 +71,9 @@ date
 
 [[ !( -d logs) ]] && mkdir logs -p
 
-decomposePar &> logs/decomposePar.log &&
-mpiexec $EXECUTABLE -parallel &> logs/$EXECUTABLE.log &&
-reconstructPar &> logs/reconstructPar.log &&
+decomposePar &&gt; logs/decomposePar.log &&
+mpiexec $EXECUTABLE -parallel &&gt; logs/$EXECUTABLE.log &&
+reconstructPar &&gt; logs/reconstructPar.log &&
 rm -rf processor*
 
 echo "Run completed at: "
