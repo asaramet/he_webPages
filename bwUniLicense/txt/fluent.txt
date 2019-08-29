@@ -33,9 +33,9 @@ module load cae/ansys/18.2
 
 # start a SSH tunnel, creating a control socket.
 DEAMON_PORT=49296
-ssh -M -S ansys-socket -fnNT -L 2325:rsnt0001.hs-esslingen.de:2325 \
--L 1055:rsnt0001.hs-esslingen.de:1055 \
--L ${DEAMON_PORT}:rsnt0001.hs-esslingen.de:${DEAMON_PORT} \
+ssh -M -S ansys-socket -fnNT -L 2325:lizenz-ansys.hs-esslingen.de:2325 \
+-L 1055:lizenz-ansys.hs-esslingen.de:1055 \
+-L ${DEAMON_PORT}:lizenz-ansys.hs-esslingen.de:${DEAMON_PORT} \
 usidft01@comserver.hs-esslingen.de
 
 # export license environment variables
