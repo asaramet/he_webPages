@@ -22,9 +22,6 @@
 # e-mail address specification
 #MSUB -M usidft01@hs-esslingen.de
 
-# Switches to the directory from which the "qsub" command run:
-cd $MOAB_SUBMITDIR
-
 echo "Starting at "
 date
 
@@ -34,9 +31,6 @@ VERSION="12.06.011"
 # specify sim case file name
 CASE_NAME=test_case.sim
 INPUT=${MOAB_SUBMITDIR}/${CASE_NAME}
-
-# switch to the folder where 'msub' run:
-cd ${MOAB_SUBMITDIR}
 
 # create hostslist
 export jms_nodes=`srun hostname -s`

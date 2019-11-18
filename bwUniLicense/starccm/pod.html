@@ -40,6 +40,10 @@ VERSION="12.06.011"
 CASE_NAME=test_case.sim
 INPUT=${MOAB_SUBMITDIR}/${CASE_NAME}
 
+# create hostslist
+export jms_nodes=`srun hostname -s`
+export hostslist=`echo $jms_nodes | sed "s/ /,/g"`
+
 # load the available STAR-CCM+ module
 module load cae/star-ccm+/$VERSION
 
@@ -52,7 +56,7 @@ np=$MOAB_PROCCOUNT
 echo "number of nodes: $np"
 
 # start parallel star-ccm+ job
-starccm+ -power -np $np -batch $INPUT
+starccm+ -power -np $np -on {hostslist} -batch $INPUT
 
 echo "Run completed at "
 date
