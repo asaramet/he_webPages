@@ -1,0 +1,108 @@
+<h2>Licenses on bwUniCluster for users from Hochschule Esslingen.</h2>
+
+<p>
+  Licenses for commercial software like ANSYS, or STAR-CCM+ for users from Esslingen University of Applied Sciences (HE),
+  that a managed by a local license server, are not openly available on platforms other than the university handled ones.
+</p>
+<p>
+  bwUniCluster being a HPC resource platform opened for users from different universities from Baden-Württemberg,
+  does not have direct access to the license servers from HE.
+</p>
+<p>
+  Nonetheless, reaching the HE license servers resources is possible through SSH-tunneling.
+</p>
+
+<h3>Access and configuration.</h3>
+<p>
+  A SSH tunnel (also called SSH port forwarding) allows data exchange between bwUniCluster's specific nodes and
+  a license server through an intermediate server/PC which has an SSH encrypted connection with bwUniCluster. (See the diagram below)
+</p>
+<p>In other words, you need a server or PC which can be accessed from bwUniCluster through SSH and is connected to the license server.</p>
+<p>For HE users such, a server is <kbd>comserver.hs-esslingen.de</kbd></p>
+<p><pre>
+
+      + - - - - - - - - - - - - - - - - - - - +
+               _________
+      |       | Compute |                     |
+              | Node    |
+      |       +---------+                     |    _________                    _________
+              | Compute |____            _________|_ _ _ _ _|___           ____|         |
+      |       | Node     ____ SSH-tunnel _________ _ _ _ _ _ ___ SSH-tunnel____  License |
+              +_________+                     |   | Com     |                  | Server  |
+      |           ||                              | Server  |                  |         |
+                  ||      bwUniCluster        |   |         |                  +_________+
+      |           ||                              +_________+
+               ___||___          _________    |
+      |       |        |        |         |
+              | Login  |========| Compute |   |
+      |       | Nodes  |        | Nodes   |
+              +________+        +_________+   |
+      |
+      + - - - - - - - - - - - - - - - - - - - +
+
+</pre></p>
+<p>
+  So, in order to create any SSH tunnel from the cluster nodes to the license server you must first ensure that a valid connection exists
+  from the bwUniCluster to the com server and it can be passwordless accessed through SSH key authentication.</p>
+<h4>Configure SSH key based secure authentication from bwUniCluster to the intermediate (com) server.</h4>
+<p>1. Create a SSH public key.</p>
+<p>
+  If you don't have a SSH public key on bwUniCluster, create one with:
+</p>
+<p><pre>
+  ssh-keygen
+</pre></p>
+<p>Follow and fill the requested options. At the end you should have the following file created:</p>
+<p><pre>
+  $HOME/.ssh/id_rsa.pub
+</pre></p>
+<p>2. Authorize SSH key authentication from bwUniCluster to HE comserver.</p>
+<p>
+  After you created the SSH public key. Run the following command from bwUniCluster:
+</p>
+<p><pre>
+  ssh-copy-id -i ~/.ssh/id_rsa.pub &ltUSER_ID&gt@&ltCOM_HOSTNAME&gt
+</pre></p>
+<p>
+  where, <kbd>&ltUSER_ID&gt</kbd> is the HE user ID, and <kbd>&ltCOM_HOSTNAME&gt</kbd> is the intermediate server host name.
+</p>
+<p>
+  In our case it is  <kbd>comserver.hs-esslingen.de</kbd>
+</p>
+<p>
+  You'll be asked to provide the HE password for authentication on <kbd>comserver.hs-esslingen.de</kbd>.
+</p>
+<p>
+  To verify if the SSH key based secure authentication have been successfully established, you may run the following command from bwUniCluster:
+</p>
+<p><pre>
+  ssh &ltUSER_ID&gt@&ltCOM_HOSTNAME&gt
+</pre></p>
+<p>If you get an SSH window of the &ltCOM_HOSTNAME&gt, without being asked for any password, you configured your SSH key based connection successfully. Congratulations.</p>
+
+<h3>Creating a SSH tunnel.</h3>
+<p>
+  1. Having access to the intermediate server with the host name <kbd>&ltCOM_HOSTNAME&gt</kbd>, user id <kbd>&ltUSER_ID&gt</kbd>
+</p>
+<p>
+  2. Knowing that the intermediate server can connect to the license server with host name <kbd>&ltLCS_HOSTNAME&gt</kbd>, through port <kbd>&ltLCS_PORT&gt</kbd>
+</p>
+<p>
+  It is possible to create an SSH tunnel through a free port <kbd>&ltLOCAL_PORT&gt</kbd>, with the following command:
+</p>
+<p><pre>
+  ssh -MS tunnel-socket -fnNT -L &ltLOCAL_PORT&gt:&ltLCS_HOSTNAME&gt:&ltLCS_PORT&gt &ltUSER_ID&gt@&ltCOM_HOSTNAME&gt
+</pre></p>
+<p>
+  where, <kbd>tunnel-socket</kbd> will be the link to a temporary SSH control socket with the SSH tunnel running in background.
+</p>
+<p>
+  The following command will check the process id of this socket:
+</p>
+<p><pre>
+  ssh -S tunnel-socket -O check &ltUSER_ID&gt@&ltCOM_HOSTNAME&gt
+</pre></p>
+<p>To close the socket and the tunnel connection with it, do:</p>
+<p><pre>
+  ssh -S tunnel-socket -O exit &ltUSER_ID&gt@&ltCOM_HOSTNAME&gt
+</pre></p>

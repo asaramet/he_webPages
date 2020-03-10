@@ -1,0 +1,45 @@
+<h1>OpenFOAM on bwUniCluster 2</h1>
+<h2>Accessing and basic usage</h2>
+<p>To view which OpenFOAM modules are available on the cluster, run the
+  following command:
+  <pre>$ module avail cae/openfoam</pre>
+</p>
+<p>or: <pre>$ module spider cae/openfoam</pre></p>
+<p>To load the appropriate version (if available), run:
+  <pre>$ module load cae/openfoam/&ltversion&gt</pre>
+  where <kbd>&ltversion&gt</kbd> is the desired available OpenFOAM version to load.
+</p>
+<p>After the module is loaded, OpenFOAM needs to be activated by running following:
+  <pre>$ source $FOAM_INIT</pre>
+</p>
+<p>or simply:
+  <pre>$ foamInit</pre>
+</p>
+<h2>Parallel processing with OpenFOAM</h2>
+<p>To run any job in a parallel mode with OpenFOAM, the geometry domain should be decomposed into
+  segments, equal to the number of processors you intend to use. That means, for example, a mesh of
+  a case which will run on 8 processors, must first be decomposed into 8 segments.
+  Then the solver is run in <em>parallel</em> mode, concurrently on these 8 segments, each processor
+  responding for one segment of the mesh, sharing the data with all other processors in between. There
+  is a built in mechanism which properly connects the generated data on each segment to avoid the
+  possible errors.
+</p>
+<p>Mesh decomposition is handled by <kbd>decomposePar</kbd> utility. The number of parts to decompose
+  the geometry domain as well as the method to do so is defined in <kbd>system/decomposeParDict</kbd>
+  file, in your OpenFOAM case folder.
+</p>
+<h3>Specific domain decomposition and reconstruct on bwUniCluster 2</h3>
+<p>Every node on bwUniCluster 2 has it's own SSD hardrive which if used will run havy data exchange
+  aplications faster. OpenFOAM will profit using these local harddrives for parallel data processing.
+</p>
+<p>For this purpuse some specific wrappers are developed for bwUniCluster 2 to move data on
+nodes local hardrives after domain decomposition and collect it back before reconstruct.
+Using following commands:</p>
+<p>
+instead of <kbd>decomposePar</kbd>
+<pre>decomposeParHPC</pre>
+instead of <kbd>reconstructPar</kbd>
+<pre>reconstructParHPC</pre>
+ instead of <kbd>reconstructParMesh</kbd>
+<pre>reconstructParMeshHPC</pre>
+</p>

@@ -1,0 +1,70 @@
+<h1>Remote visualisation on bwUniCluster.</h1>
+
+<p>Remote visualisation through OpenGL and X11 Linux 3D graphics stack has several drawbacks:</p>
+<ul>
+  <li>Rendering is done on the client, not server</li>
+  <li>Not all OpenGL extensions are supported via client rendering</li>
+  <li>Network is clogged as the model must always be transferred from the server to the client</li>
+  <li>Bad interactivity due to constant loops in the X11 protocol</li>
+  <li>Compatibility problems</li>
+</ul>
+
+<p>On bwUniCluster a Virtual Network Computing (VNC) desktop is provided to avoid these drawbacks.</p>
+
+<h2>Start VNC server on the cluster</h2>
+<p>To use any visualisation software via a VNC on bwUniCluster, first you'll have to open a VNC session in the cluster.</p>
+<p>start_vnc_desktop is a batch script which can be used on login nodes to automatically:</p>
+<ol>
+  <li>allocate resources for the VNC server</li>
+  <li>start the VNC server on the allocated resources</li>
+</ol>
+
+<h3>start_vnc_desktop options:</h3>
+<p>Get some info on how to use the command:</p>
+<p><pre>start_vnc_desktop --help</pre></p>
+<p>To start a VNC server without any 3D rendering support, do:</p>
+<p><pre>start_vnc_desktop</pre></p>
+<p>On limited number of nodes you can use hardware rendering, with:</p>
+<p><pre>start_vnc_desktop --hw-rendering</pre></p>
+<p>For large 3D data sets software rendering may be faster:</p>
+<p><pre>start_vnc_desktop --sw-rendering</pre></p>
+
+<h2>Use a VNC client on your local desktop</h2>
+<p>Any VNC client can be used to connect to the server, although TurboVNC is recommended as it has
+  been tested and is compatible with various OSes</p>
+
+<h3>Linux:</h3>
+<p>Once you have your VNC client installed and you start the server,
+  you'll be provided with a command line to start your viewer from the terminal.</p>
+<p>Example:</p>
+<p><pre>vncviewer ExtSSH=1 Via=es_username@uc1.scc.kit.edu Server=uc1n251:1 Password=SUMpwd11 SecurityTypes=VNC</pre></p>
+<p>Or you can use the data provided after you start the server to open your session with VNC viewer GUI.</p>
+<p><b>Note: </b>Your GUI must have the "Gateway" selection in your "Options" - "Security" tab.</p>
+
+<h3>Windows:</h3>
+<ul>
+  <li><a href="https://sourceforge.net/projects/turbovnc/files/" target="_blank">Download</a> and install latest TurboVNC version for your system.</li>
+  <li>Execute <b>Java TurboVNCviewer</b>, not just TurboVNCviewer as it will not provide you with the option to set the "Gateway"</li>
+</ul>
+<p>If you get the error: "Windows cannot find 'jawaw.exe'. Make sure you typed the name correctly...":</p>
+<ul>
+  <li>Make sure Java Runtime Environment (JRE) is installed on your machine</li>
+  <li>JRE 'bin' path is provided in "System Properties":
+    <ul>
+      <li>open 'sysdm.cpl' in <b>Win + R</b> window;</li>
+      <li>go to 'Advanced' -> 'Environment Variables...', </li>
+      <li>Add to 'Path' variable you JRE bin folder. Example: <kbd>C:\Program Files\Java\jre12\bin</kbd></li>
+    </ul>
+  </li>
+</ul>
+
+<h2>Open your application in the provided virtual machine window</h2>
+<p>Once the new VNC interface is loaded you get a Linux RedHat desktop, in which you can:</p>
+<ul>
+  <li>open a 'Konsole' or 'Terminal'</li>
+  <li>load your software module. For example:<pre>module load cae/paraview/5.6.0</pre></li>
+  <li>start you application. Example: <pre>paraview</pre></li>
+</ul>
+
+<h2>Close the VNC session</h2>
+<p>As the work is over you can close the VNC server connection with <b>Ctrl+D</b> from the node window on the cluster that was automatically opened for you.</p>

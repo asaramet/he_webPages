@@ -1,0 +1,27 @@
+<h2>Reaching ANSYS license servers from bwUniCluster through SSH tunneling.</h2>
+<p>
+  ANSYS packages are connected to university's FLEXlm servers through two ports: 1055 and 2325.
+</p>
+<p>
+  Besides these 2 ports, an extra port, required by the FLEXlm deamon, should be tunneled as well.
+  In the examples below we named it DEAMON_PORT and set it to an arbitrary port, 49296
+</p>
+<p>
+  The following command will create an SSH master control socket with the respective ports tunneled through the <kbd>comserver.hs-esslingen.de</kbd>:
+</p>
+<p><pre>
+  DEAMON_PORT=49296
+  ssh -MS ansys-socket -fnNT -L 2325:lizenz-ansys.hs-esslingen.de:2325 \
+  -L 1055:lizenz-ansys.hs-esslingen.de:1055 -L \
+  ${DEAMON_PORT}:lizenz-ansys.hs-esslingen.de:${DEAMON_PORT} \
+  userID@comserver.hs-esslingen.de
+</pre></p>
+<p>
+  where, <kbd>userID</kbd> is the id of the user on <kbd>comserver.hs-esslingen.de</kbd>
+</p>
+<p>
+  After you finish your simulations, don't forget to close the socket with:
+</p>
+<p><pre>
+  ssh -S tunnel-socket -O exit userID@comserver.hs-esslingen.de
+</pre></p>

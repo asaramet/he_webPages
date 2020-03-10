@@ -1,0 +1,57 @@
+#!/bin/bash
+#
+# Number of cores and processors to use
+#MSUB -l nodes=1:ppn=8
+#MSUB -l pmem=4000mb
+#
+# Time to run
+#MSUB -l walltime=02:00:00
+
+# define the queue class: singlenode, multinode, verylong, fat etc.
+# more info: http://www.bwhpc-c5.de/wiki/index.php/Batch_Jobs_-_bwUniCluster_Features#msub_-q_queues
+#MSUB -q singlenode
+#
+# Name of the job
+#MSUB -N starccm_pod-test
+#
+# set a log file for job's output
+#MSUB -o test_simple.log
+#
+# send an e-mail when a job begins, aborts or ends
+#MSUB -m abe
+# e-mail address specification
+#MSUB -M usidft01@hs-esslingen.de
+
+# Switches to the directory from which the "qsub" command run:
+cd $MOAB_SUBMITDIR
+
+echo "Starting at "
+date
+
+# specify the STAR-CCM+ version to load (available on the cluster)
+VERSION="12.06.011"
+
+# specify sim case file name
+CASE_NAME=test_case.sim
+INPUT=${MOAB_SUBMITDIR}/${CASE_NAME}
+
+# create hostslist
+export jms_nodes=`srun hostname -s`
+export hostslist=`echo $jms_nodes | sed "s/ /,/g"`
+
+# load the available STAR-CCM+ module
+module load cae/star-ccm+/$VERSION
+
+# set license variables: server address and POD key string
+export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
+export LM_PROJECT=sum123key040oops55od
+
+# calculate number of nodes
+np=$MOAB_PROCCOUNT
+echo "number of nodes: $np"
+
+# start parallel star-ccm+ job
+starccm+ -power -np $np -on {hostslist} -batch $INPUT
+
+echo "Run completed at "
+date

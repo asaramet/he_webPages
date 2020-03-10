@@ -1,0 +1,82 @@
+<h2>Fluent batch job on bwUniCluster using HE managed licenses.</h2>
+<p>
+  As you may know from, <a href="https://wiki.bwhpc.de/e/BwUniCluster_2.0_Slurm_common_Features">bwUniCluster 2 Slurm common features</a>,
+  in order to start a job on the cluster you will need to send a specific batch script to <kbd>sbatch</kbd> Linux application.
+</p>
+<p>
+  Below, you may consult a sample of a script which will start a FLUENT job on bwUniCluster,
+  using ANSYS v.19.2, a single node, 20 processors.
+</p>
+<p>
+  The job will be using Esslingen's university ANSYS license manager, with the host name <kbd>lizenz-ansys.hs-esslingen.de</kbd>.
+</p>
+<p>
+  For cleanness let's assume a hypothetical HE user with an HE user id: <kbd>&ltHE_USER_ID&gt</kbd>
+</p>
+<p><pre>
+#!/bin/bash
+# Allocate one node
+#SBATCH --nodes=1
+# Number of program instances to be executed
+#SBATCH --tasks-per-node=20
+# Queue class
+#SBATCH --partition=normal
+# Maximum run time of job
+#SBATCH --time=2:00:00
+# Give job a reasonable name
+#SBATCH --job-name=fluent-test
+# File name for standard output (%j will be replaced by job id)
+#SBATCH --output=fluent-test-%j.out
+# File name for error output
+#SBATCH --error=fluent-test-%j.err
+# send an e-mail when a job begins, aborts or ends
+#SBATCH --mail-type=ALL
+# e-mail address specification
+#SBATCH --mail-user=&ltHE_USER_ID&gt@hs-esslingen.de
+
+# Switches to the directory from which the "qsub" command run:
+cd $SLURM_SUBMIT_DIR
+
+echo "Starting at "
+date
+
+# load the software package
+module load cae/ansys/19.2
+
+HE_USER_ID=&ltHE_USER_ID&gt
+
+# start a SSH tunnel, creating a control socket.
+DEAMON_PORT=49296
+ssh -M -S ansys-socket -fnNT -L 2325:lizenz-ansys.hs-esslingen.de:2325 \
+-L 1055:lizenz-ansys.hs-esslingen.de:1055 \
+-L ${DEAMON_PORT}:lizenz-ansys.hs-esslingen.de:${DEAMON_PORT} \
+${HE_USER_ID}@comserver.hs-esslingen.de
+
+# export license environment variables
+export ANSYSLMD_LICENSE_FILE=1055@localhost
+export ANSYSLI_SERVERS=2325@localhost
+
+# Create the hosts file 'fluent.hosts'
+HOSTS="fluent.hosts"
+scontrol show hostname ${SLURM_JOB_NODELIST} &gt ${HOSTS}
+
+# set number of nodes variable
+nrNodes=${SLURM_JOB_NUM_NODES}
+
+echo "number of nodes: $nrNodes"
+
+# run fluent in parallel, where fluentJournal.jou is a fluent Journal File
+# more about creating Journal Files:
+# https://www.sharcnet.ca/Software/Ansys/16.2.3/en-us/help/flu_ug/flu_ug_JournalFile.html
+
+echo "Starting fluent..."
+fluent 3d -t$nrNodes -g -env -pib -mpi=intel -cnf=${HOSTS} -i fluentJournal.jou &&
+
+# close the SSH control socket
+ssh -S ansys-socket -O exit ${HE_USER_ID}@comserver.hs-esslingen.de
+
+[[ -f ${HOSTS} ]] && rm -rf ${HOSTS}
+
+echo "Run completed at "
+date
+</pre></p>
