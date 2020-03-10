@@ -38,7 +38,9 @@ module load cae/starccm+/$VERSION
 
 # start a SSH tunnel, creating a control socket.
 DEAMON_PORT=49296
-ssh -MS starccm-socket -fnNT -L 1999:lizenz-cd-adapco.hs-esslingen.de:1999 \
+SOCKET_NAME='starccm-socket'
+[[ -f ${SOCKET_NAME} ]] && rm -f ${SOCKET_NAME}
+ssh -MS ${SOCKET_NAME} -fnNT -L 1999:lizenz-cd-adapco.hs-esslingen.de:1999 \
 -L ${DEAMON_PORT}:lizenz-cd-adapco.hs-esslingen.de:${DEAMON_PORT} \
 ${HE_USER_ID}@comserver.hs-esslingen.de
 
@@ -54,7 +56,7 @@ echo "number of nodes: $np"
 starccm+ -power -np $np -on ${hostslist} -batch $INPUT
 
 # close the SSH control socket
-ssh -S starccm-socket -O exit ${HE_USER_ID}@comserver.hs-esslingen.de
+ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@comserver.hs-esslingen.de
 
 echo "Run completed at "
 date

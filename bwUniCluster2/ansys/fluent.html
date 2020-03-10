@@ -1,4 +1,4 @@
-<h2>Fluent batch job on bwUniCluster using HE managed licenses.</h2>
+<h2>Fluent sbatch job on bwUniCluster 2 using HE managed licenses.</h2>
 <p>
   As you may know from, <a href="https://wiki.bwhpc.de/e/BwUniCluster_2.0_Slurm_common_Features">bwUniCluster 2 Slurm common features</a>,
   in order to start a job on the cluster you will need to send a specific batch script to <kbd>sbatch</kbd> Linux application.
@@ -33,9 +33,6 @@
 #SBATCH --mail-type=ALL
 # e-mail address specification
 #SBATCH --mail-user=&ltHE_USER_ID&gt@hs-esslingen.de
-
-# Switches to the directory from which the "qsub" command run:
-cd $SLURM_SUBMIT_DIR
 
 echo "Starting at "
 date

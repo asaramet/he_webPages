@@ -18,9 +18,6 @@
 # e-mail address specification
 #SBATCH --mail-user=<HE_USER_ID>@hs-esslingen.de
 
-# Switches to the directory from which the "qsub" command run:
-cd $SLURM_SUBMIT_DIR
-
 echo "Starting at "
 date
 

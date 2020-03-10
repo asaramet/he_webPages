@@ -1,14 +1,14 @@
 #!/bin/bash
 # Allocate one node
-#SBATCH --nodes=1
+#SBATCH --nodes=4
 # Number of program instances to be executed
 #SBATCH --tasks-per-node=20
 # Queue class
 #SBATCH --partition=normal
 # Maximum run time of job
-#SBATCH --time=2:00:00
+#SBATCH --time=8:00:00
 # Give job a reasonable name
-#SBATCH --job-name=fluent-test
+#SBATCH --job-name=cfx5-job
 # File name for standard output (%j will be replaced by job id)
 #SBATCH --output=fluent-test-%j.out
 # File name for error output
@@ -25,10 +25,14 @@ date
 module load cae/ansys/19.2
 
 HE_USER_ID=<HE_USER_ID>
+CASE_NAME="cfx_example.def"
+INPUT="${SLURM_SUBMIT_DIR}/${CASE_NAME}"
 
 # start a SSH tunnel, creating a control socket.
 DEAMON_PORT=49296
-ssh -M -S ansys-socket -fnNT -L 2325:lizenz-ansys.hs-esslingen.de:2325 \
+SOCKET_NAME="cfx-socket"
+[[ -f ${SOCKET_NAME} ]] && rm -f ${SOCKET_NAME}
+ssh -M -S ${SOCKET_NAME} -fnNT -L 2325:lizenz-ansys.hs-esslingen.de:2325 \
 -L 1055:lizenz-ansys.hs-esslingen.de:1055 \
 -L ${DEAMON_PORT}:lizenz-ansys.hs-esslingen.de:${DEAMON_PORT} \
 ${HE_USER_ID}@comserver.hs-esslingen.de
@@ -37,26 +41,19 @@ ${HE_USER_ID}@comserver.hs-esslingen.de
 export ANSYSLMD_LICENSE_FILE=1055@localhost
 export ANSYSLI_SERVERS=2325@localhost
 
-# Create the hosts file 'fluent.hosts'
-HOSTS="fluent.hosts"
-scontrol show hostname ${SLURM_JOB_NODELIST} > ${HOSTS}
+# create hostslist
+export jms_nodes=`srun hostname -s`
+export hostslist=`echo $jms_nodes | sed "s/ /,/g"`
 
 # set number of nodes variable
 nrNodes=${SLURM_JOB_NUM_NODES}
-
 echo "number of nodes: $nrNodes"
 
-# run fluent in parallel, where fluentJournal.jou is a fluent Journal File
-# more about creating Journal Files:
-# https://www.sharcnet.ca/Software/Ansys/16.2.3/en-us/help/flu_ug/flu_ug_JournalFile.html
-
-echo "Starting fluent..."
-fluent 3d -t$nrNodes -g -env -pib -mpi=intel -cnf=fluent.hosts -i fluentJournal.jou &&
+cfx5solve -batch -def $INPUT -par-host-list ${hostslist} -part ${nr_nodes} \
+-start-method "Intel MPI Distributed Parallel"
 
 # close the SSH control socket
-ssh -S ansys-socket -O exit ${HE_USER_ID}@comserver.hs-esslingen.de
-
-[[ -f ${HOSTS} ]] && rm -rf ${HOSTS}
+ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@comserver.hs-esslingen.de
 
 echo "Run completed at "
 date
