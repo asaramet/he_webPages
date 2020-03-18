@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon ./bin/www",
-    "sync": "find . -maxdepth 1 -name 'bw*' -exec rsync -uavh {}/ asaramet@rzlx0900.hs-esslingen.de:~/.public_html/{}/ --delete-excluded \\;",
-    "sync:main": "rsync -uavh index.html asaramet@rzlx0900.hs-esslingen.de:.public_html"
+    "sync": "find . -maxdepth 1 -name 'bw*' -exec rsync -uavh {}/ asaramet@comserver.hs-esslingen.de:~/.public_html/{}/ --delete-excluded \\;",
+    "sync:main": "rsync -uavh index.html asaramet@comserver.hs-esslingen.de:.public_html"
   },
   "keywords": [],
   "author": "",
