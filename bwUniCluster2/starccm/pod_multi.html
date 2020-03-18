@@ -1,5 +1,5 @@
 <h2>A batch script for a STAR-CCM+ job on multi nodes, with a POD-key license.</h2>
-<p>The job will run 4 nodes nodes, 20 processors each, with STAR-CCM+ v.2019.2, using a POD-key license.</p>
+<p>The job will run 4 nodes nodes, 80 processors each, with STAR-CCM+ v.2019.2, using a POD-key license.</p>
 <p>We are assuming the job is started by a Esslingen user with the user id: <kbd>&ltHE_USER_ID&gt</kbd>,
 and the user POD key will be a string <kbd>&ltPOD_KEY&gt</kbd></p>
 <p><pre>
@@ -7,9 +7,9 @@ and the user POD key will be a string <kbd>&ltPOD_KEY&gt</kbd></p>
 # Allocate nodes
 #SBATCH --nodes=4
 # Number of program instances to be executed
-#SBATCH --tasks-per-node=20
-# Queue class
-#SBATCH --partition=normal
+#SBATCH --tasks-per-node=80
+# Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
+#SBATCH --partition=multiple
 # Maximum run time of job
 #SBATCH --time=4:00:00
 # Give job a reasonable name

@@ -2,9 +2,9 @@
 # Allocate nodes
 #SBATCH --nodes=4
 # Number of program instances to be executed
-#SBATCH --tasks-per-node=20
-# Queue class
-#SBATCH --partition=normal
+#SBATCH --tasks-per-node=80
+# Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
+#SBATCH --partition=multiple
 # Maximum run time of job
 #SBATCH --time=4:00:00
 # Give job a reasonable name

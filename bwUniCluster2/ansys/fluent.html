@@ -5,7 +5,7 @@
 </p>
 <p>
   Below, you may consult a sample of a script which will start a FLUENT job on bwUniCluster,
-  using ANSYS v.19.2, a single node, 20 processors.
+  using ANSYS v.19.2, a single node, 80 processors.
 </p>
 <p>
   The job will be using Esslingen's university ANSYS license manager, with the host name <kbd>lizenz-ansys.hs-esslingen.de</kbd>.
@@ -18,9 +18,9 @@
 # Allocate one node
 #SBATCH --nodes=1
 # Number of program instances to be executed
-#SBATCH --tasks-per-node=20
-# Queue class
-#SBATCH --partition=normal
+#SBATCH --tasks-per-node=80
+# Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
+#SBATCH --partition=single
 # Maximum run time of job
 #SBATCH --time=2:00:00
 # Give job a reasonable name
