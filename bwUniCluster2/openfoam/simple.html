@@ -2,8 +2,8 @@
 <p><strong>Attention: </strong>OpenFOAM module loads automatically the necessary MPI and Compiler.</p>
 <p>A job script to submit a sbatch job called <em>openfoam.sh</em> which builds a mesh with <kbd>blockMesh</kbd>,
   and <kbd>snappyHexMesh</kbd> in parallel, then checks it also in parallel with <kbd>checkMesh</kbd>,
-  runs the solver specified in <kbd>system/controlDict</kbd> on 2 nodes, with 80 tasks each,
-  totalling in 160 processors, is shown bellow and also available for download. (See the end of the page)
+  runs the solver specified in <kbd>system/controlDict</kbd> on 2 nodes, with 40 tasks each,
+  totalling in 80 processors, is shown bellow and also available for download. (See the end of the page)
 </p>
 <p><pre>
 #!/bin/bash
@@ -11,7 +11,7 @@
 # Allocate nodes
 #SBATCH --nodes=2
 # Number of program instances to be executed
-#SBATCH --tasks-per-node=80
+#SBATCH --ntasks-per-node=40
 # Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
 #SBATCH --partition=multiple
 # Maximum run time of job

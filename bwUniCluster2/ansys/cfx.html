@@ -1,7 +1,7 @@
 <h2>CFX sbatch job on bwUniCluster using HE managed licenses.</h2>
 <p>
   The script below, will start a CFX5 job on bwUniCluster,
-  using ANSYS v.19.2, 4 nodes with 80 tasks each, totaling in 320 processors.
+  using ANSYS v.19.2, 4 nodes with 40 tasks each, totaling in 160 processors.
 </p>
 <p>This script can also be downloaded clicking the liks in the page footer.</p>
 <p>
@@ -16,7 +16,7 @@
 # Allocate one node
 #SBATCH --nodes=4
 # Number of program instances to be executed
-#SBATCH --tasks-per-node=80
+#SBATCH --ntasks-per-node=40
 # Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
 #SBATCH --partition=multiple
 # Maximum run time of job
