@@ -2,7 +2,7 @@
 # Allocate one node
 #SBATCH --nodes=1
 # Number of program instances to be executed
-#SBATCH --ntasks-per-node=28
+#SBATCH --ntasks=28
 # Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
 #SBATCH --partition=single
 # Maximum run time of job
@@ -25,8 +25,7 @@ date
 VERSION="2019.2"
 
 # specify sim case file name
-CASE_NAME=test_case.sim
-INPUT=${SLURM_SUBMIT_DIR}/${CASE_NAME}
+INPUT=test_case.sim
 HE_USER_ID=<HE_USER_ID>
 
 # create hostslist
@@ -49,7 +48,7 @@ export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com;1999@localhost
 export LM_PROJECT=<POD_KEY>
 
 # calculate number of nodes
-np=${SLURM_JOB_NUM_NODES}
+np=${SLURM_NTASKS}
 echo "number of nodes: $np"
 
 # start parallel star-ccm+ job
