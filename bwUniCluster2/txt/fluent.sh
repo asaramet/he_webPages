@@ -42,7 +42,7 @@ HOSTS="fluent.hosts"
 scontrol show hostname ${SLURM_JOB_NODELIST} > ${HOSTS}
 
 # set number of nodes variable
-nrNodes=${SLURM_JOB_NUM_NODES}
+nrNodes=${SLURM_NTASKS}
 
 echo "number of nodes: $nrNodes"
 

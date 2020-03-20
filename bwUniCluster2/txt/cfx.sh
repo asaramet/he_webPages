@@ -25,8 +25,7 @@ date
 module load cae/ansys/19.2
 
 HE_USER_ID=<HE_USER_ID>
-CASE_NAME="cfx_example.def"
-INPUT="${SLURM_SUBMIT_DIR}/${CASE_NAME}"
+INPUT='cfx_example.def'
 
 # start a SSH tunnel, creating a control socket.
 DEAMON_PORT=49296
@@ -46,7 +45,7 @@ export jms_nodes=`srun hostname -s`
 export hostslist=`echo $jms_nodes | sed "s/ /,/g"`
 
 # set number of nodes variable
-nrNodes=${SLURM_JOB_NUM_NODES}
+nrNodes=${SLURM_NTASKS}
 echo "number of nodes: $nrNodes"
 
 cfx5solve -batch -def $INPUT -par-host-list ${hostslist} -part ${nr_nodes} \
