@@ -51,7 +51,7 @@ echo "number of nodes: $nrNodes"
 # https://www.sharcnet.ca/Software/Ansys/16.2.3/en-us/help/flu_ug/flu_ug_JournalFile.html
 
 echo "Starting fluent..."
-fluent 3d -t$nrNodes -g -env -pib -mpi=intel -cnf=fluent.hosts -i fluentJournal.jou &&
+fluent 3d -t$nrNodes -g -env -pib -mpi=intel -cnf=${HOSTS} -i fluentJournal.jou &&
 
 # close the SSH control socket
 ssh -S ansys-socket -O exit ${HE_USER_ID}@comserver.hs-esslingen.de
