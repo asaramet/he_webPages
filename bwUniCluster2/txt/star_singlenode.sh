@@ -2,7 +2,7 @@
 # Allocate one node
 #SBATCH --nodes=1
 # Number of program instances to be executed
-#SBATCH --ntasks=28
+#SBATCH --ntasks=40
 # Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
 #SBATCH --partition=single
 # Maximum run time of job
@@ -27,10 +27,6 @@ VERSION="2019.2"
 # specify sim case file name
 INPUT=test_case.sim
 
-# create hostslist
-export jms_nodes=`srun hostname -s`
-export hostslist=`echo $jms_nodes | sed "s/ /,/g"`
-
 # load the available STAR-CCM+ module
 module load cae/star-ccm+/${VERSION}
 
@@ -43,7 +39,7 @@ np=${SLURM_NTASKS}
 echo "number of nodes: $np"
 
 # start parallel star-ccm+ job
-starccm+ -power -np $np -on {hostslist} -batch $INPUT
+starccm+ -power -np $np -batch $INPUT
 
 echo "Run completed at "
 date

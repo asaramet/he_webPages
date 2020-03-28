@@ -9,7 +9,7 @@
 <p>The script will be similar to the POD one, adding the SSH tunnel and mentioning it in
   the license server check variable.</p>
 
-<p>The job will run on a single node, 28 processors, with STAR-CCM+ v.2019.2, using a POD-key license.</p>
+<p>The job will run on a single node, 40 processors, with STAR-CCM+ v.2019.2, using a POD-key license.</p>
 <p>We are assuming the job is started by a Esslingen user with the user id: <kbd>&ltHE_USER_ID&gt</kbd></p>
 <p>And the user POD key will be a string <kbd>&ltPOD_KEY&gt</kbd></p>
 <p><pre>
@@ -17,7 +17,7 @@
 # Allocate one node
 #SBATCH --nodes=1
 # Number of program instances to be executed
-#SBATCH --ntasks=28
+#SBATCH --ntasks=40
 # Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
 #SBATCH --partition=single
 # Maximum run time of job
@@ -43,10 +43,6 @@ VERSION="2019.2"
 INPUT=test_case.sim
 HE_USER_ID=&ltHE_USER_ID&gt
 
-# create hostslist
-export jms_nodes=`srun hostname -s`
-export hostslist=`echo $jms_nodes | sed "s/ /,/g"`
-
 # load the available STAR-CCM+ module
 module load cae/starccm+/$VERSION
 
@@ -65,7 +61,7 @@ np=${SLURM_NTASKS}
 echo "number of nodes: $np"
 
 # start parallel star-ccm+ job
-starccm+ -power -np $np -on ${hostslist} -batch $INPUT
+starccm+ -power -np $np -batch $INPUT
 
 # close the SSH control socket
 ssh -S starccm-socket -O exit ${HE_USER_ID}@comserver.hs-esslingen.de
