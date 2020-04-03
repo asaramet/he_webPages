@@ -16,7 +16,7 @@
 # send an e-mail when a job begins, aborts or ends
 #SBATCH --mail-type=ALL
 # e-mail address specification
-#SBATCH --mail-user=<HE_USER_ID>@hs-esslingen.de
+#SBATCH --mail-user=[HE_USER_ID]@hs-esslingen.de
 
 echo "Starting at "
 date
@@ -24,14 +24,16 @@ date
 # load the software package
 module load cae/ansys/19.2
 
-HE_USER_ID=<HE_USER_ID>
+HE_USER_ID=[HE_USER_ID]
+HE_LIZENZ_SERVER='lizenz-ansys.hs-esslingen.de'
+HE_COM_SERVER='comserver.hs-esslingen.de'
 
 # start a SSH tunnel, creating a control socket.
 DEAMON_PORT=49296
-ssh -M -S ansys-socket -fnNT -L 2325:lizenz-ansys.hs-esslingen.de:2325 \
--L 1055:lizenz-ansys.hs-esslingen.de:1055 \
--L ${DEAMON_PORT}:lizenz-ansys.hs-esslingen.de:${DEAMON_PORT} \
-${HE_USER_ID}@comserver.hs-esslingen.de
+ssh -M -S ansys-socket -fnNT -L 2325:${HE_LIZENZ_SERVER}:2325 \
+-L 1055:${HE_LIZENZ_SERVER}:1055 \
+-L ${DEAMON_PORT}:${HE_LIZENZ_SERVER}:${DEAMON_PORT} \
+${HE_USER_ID}@${HE_COM_SERVER}
 
 # export license environment variables
 export ANSYSLMD_LICENSE_FILE=1055@localhost
@@ -54,7 +56,7 @@ echo "Starting fluent..."
 fluent 3d -t$nrNodes -g -env -pib -mpi=intel -cnf=${HOSTS} -i fluentJournal.jou &&
 
 # close the SSH control socket
-ssh -S ansys-socket -O exit ${HE_USER_ID}@comserver.hs-esslingen.de
+ssh -S ansys-socket -O exit ${HE_USER_ID}@${HE_COM_SERVER}
 
 [[ -f ${HOSTS} ]] && rm -rf ${HOSTS}
 

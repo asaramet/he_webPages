@@ -1,24 +1,10 @@
-<h2>CFX sbatch job on multiple nodes using HE managed licenses.</h2>
-<p>
-  The script below, will start a CFX5 job on bwUniCluster,
-  using ANSYS v.19.2, 4 nodes with 40 tasks each, totaling in 160 processors.
-</p>
-<p>This script can also be downloaded clicking the liks in the page footer.</p>
-<p>
-  The job in an CFX5 def file named <kbd>cfx_example.def</kbd> will be using Esslingen's university ANSYS license manager, with the host name
-  <kbd>lizenz-ansys.hs-esslingen.de</kbd>.
-</p>
-<p>
-  For cleanness let's assume a hypothetical HE user with an HE user id: <kbd>my_username</kbd>
-</p>
-<p><pre>
 #!/bin/bash
 # Allocate one node
-#SBATCH --nodes=4
+#SBATCH --nodes=1
 # Number of program instances to be executed
 #SBATCH --ntasks-per-node=40
 # Queue class https://wiki.bwhpc.de/e/BwUniCluster_2.0_Batch_Queues
-#SBATCH --partition=multiple
+#SBATCH --partition=single
 # Maximum run time of job
 #SBATCH --time=8:00:00
 # Give job a reasonable name
@@ -30,7 +16,7 @@
 # send an e-mail when a job begins, aborts or ends
 #SBATCH --mail-type=ALL
 # e-mail address specification
-#SBATCH --mail-user=my_username@hs-esslingen.de
+#SBATCH --mail-user=[HE_USER_ID]@hs-esslingen.de
 
 echo "Starting at "
 date
@@ -38,10 +24,10 @@ date
 # load the software package
 module load cae/ansys/19.2
 
-HE_USER_ID=my_username
+HE_USER_ID=[HE_USER_ID]
 HE_COM_SERVER='comserver.hs-esslingen.de'
 HE_LIZENZ_SERVER='lizenz-ansys.hs-esslingen.de'
-INPUT="cfx_example.def"
+INPUT='cfx_example.def'
 
 # start a SSH tunnel, creating a control socket.
 DEAMON_PORT=49296
@@ -56,15 +42,10 @@ ${HE_USER_ID}@${HE_COM_SERVER}
 export ANSYSLMD_LICENSE_FILE=1055@localhost
 export ANSYSLI_SERVERS=2325@localhost
 
-# create hostslist
-export jms_nodes=`srun hostname -s`
-export hostslist=`echo $jms_nodes | sed "s/ /,/g"`
-
-cfx5solve -batch -def $INPUT -par-dist ${hostslist} -start-method "Intel MPI Distributed Parallel"
+cfx5solve -batch -def $INPUT -part=${SLURM_NTASKS} -start-method "Intel MPI Local Parallel"
 
 # close the SSH control socket
 ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@${HE_COM_SERVER}
 
 echo "Run completed at "
 date
-</pre></p>

@@ -10,13 +10,13 @@
 # Give job a reasonable name
 #SBATCH --job-name=cfx5-job
 # File name for standard output (%j will be replaced by job id)
-#SBATCH --output=fluent-test-%j.out
+#SBATCH --output=cfx-test-%j.out
 # File name for error output
-#SBATCH --error=fluent-test-%j.err
+#SBATCH --error=cfx-test-%j.err
 # send an e-mail when a job begins, aborts or ends
 #SBATCH --mail-type=ALL
 # e-mail address specification
-#SBATCH --mail-user=<HE_USER_ID>@hs-esslingen.de
+#SBATCH --mail-user=[HE_USER_ID]@hs-esslingen.de
 
 echo "Starting at "
 date
@@ -24,17 +24,19 @@ date
 # load the software package
 module load cae/ansys/19.2
 
-HE_USER_ID=<HE_USER_ID>
+HE_USER_ID=[HE_USER_ID]
+HE_COM_SERVER='comserver.hs-esslingen.de'
+HE_LIZENZ_SERVER='lizenz-ansys.hs-esslingen.de'
 INPUT='cfx_example.def'
 
 # start a SSH tunnel, creating a control socket.
 DEAMON_PORT=49296
 SOCKET_NAME="cfx-socket"
 [[ -f ${SOCKET_NAME} ]] && rm -f ${SOCKET_NAME}
-ssh -M -S ${SOCKET_NAME} -fnNT -L 2325:lizenz-ansys.hs-esslingen.de:2325 \
--L 1055:lizenz-ansys.hs-esslingen.de:1055 \
--L ${DEAMON_PORT}:lizenz-ansys.hs-esslingen.de:${DEAMON_PORT} \
-${HE_USER_ID}@comserver.hs-esslingen.de
+ssh -M -S ${SOCKET_NAME} -fnNT -L 2325:${HE_LIZENZ_SERVER}:2325 \
+-L 1055:${HE_LIZENZ_SERVER}:1055 \
+-L ${DEAMON_PORT}:${HE_LIZENZ_SERVER}:${DEAMON_PORT} \
+${HE_USER_ID}@${HE_COM_SERVER}
 
 # export license environment variables
 export ANSYSLMD_LICENSE_FILE=1055@localhost
@@ -44,15 +46,10 @@ export ANSYSLI_SERVERS=2325@localhost
 export jms_nodes=`srun hostname -s`
 export hostslist=`echo $jms_nodes | sed "s/ /,/g"`
 
-# set number of nodes variable
-nrNodes=${SLURM_NTASKS}
-echo "number of nodes: $nrNodes"
-
-cfx5solve -batch -def $INPUT -par-host-list ${hostslist} -part ${nr_nodes} \
--start-method "Intel MPI Distributed Parallel"
+cfx5solve -batch -def $INPUT -par-dist ${hostslist} -start-method "Intel MPI Distributed Parallel"
 
 # close the SSH control socket
-ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@comserver.hs-esslingen.de
+ssh -S ${SOCKET_NAME} -O exit ${HE_USER_ID}@${HE_COM_SERVER}
 
 echo "Run completed at "
 date
