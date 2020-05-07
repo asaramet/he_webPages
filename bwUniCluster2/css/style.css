@@ -72,7 +72,7 @@
 
  /*------------------------------------------------------------------------------------------------------*/
 
-    #body1 {
+  #body1 {
 		background: #fff url(../images/layout/bg_aussen.gif) repeat top left;
 		padding: 0;
 	}
@@ -110,6 +110,9 @@
 	.page {
 		padding: 0;
 	}
+  kbd {
+    font-size: 1.2em;
+  }
 
 	#banner {
 		height: 150px;

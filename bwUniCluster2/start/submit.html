@@ -1,0 +1,118 @@
+<h2>Submitting a job using sbatch</h2>
+
+<p><kbd>sbatch</kbd> - a linux command to submit a batch script to Slurm workload manager
+  which allocates nodes to the users.
+The batch script may be given to sbatch through a file name on the command line
+  or directly into standart input.</p>
+<p><kbd>sbatch</kbd> will read any options in the batch script's which start with prefix
+  <kbd>#SBATCH</kbd>.</p>
+<p><kbd>sbatch</kbd> will create a job reading the batch script and allocate resources accordingly.
+The resources though won't be granted immediately, the job may sit in a pending queue till its
+required resources become available.</p>
+
+<h3>Example using sbatch</h3>
+<p>Let's say you want to run a script wich will echo "Hello world!" on 2 processors using mpirun"</p>
+<p>Here is an example of such a script, named <kbd>hello.sh</kbd>:</p>
+<pre>
+#!/usr/env/bin bash
+
+mpirun -n 2 echo "Hello, world!"
+</pre>
+
+<p>To run this script on bwUniCluster, you must first provide some #SBATCH options. Such as:</p>
+<ul>
+  <li>Number of nodes to allocate. In this case in need 1: <kbd>#SBATCH --nodes=1</kbd></li>
+  <li>Number of cpus. In this case 2: <kbd>#SBATCH --ntasks-per-node=2</kbd></li>
+  <li>Queue or partition name on the cluster: <kbd>#SBATCH --partition=single</kbd></li>
+  <li>Maximum runtime in DD:HH:MM:SS. In this case 1 minute is enough: <kbd>#SBATCH --time=1:00</kbd></li>
+  <li>etc</li>
+</ul>
+
+<p>Your new <kbd>hello.sh</kbd> script will look like:</p>
+<pre>
+#!/usr/env/bin bash
+
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=2
+#SBATCH --partition=single
+#SBATCH --time=1:00
+
+module load compiler/gnu/4.8.5
+module load mpi/openmpi/4.0
+
+mpirun -n 2 echo "Hello, world!" </pre>
+
+<p>Where <kbd>module load</kbd> loads the required software to run your <kbd>mpirun</kbd> programm.</p>
+
+<p>Now, to submit your <kbd>hello.sh</kbd> script to the cluster job scheduler you may run,
+  from the folder <kbd>hello.sh</kbd> is located:</p>
+<pre>
+  sbatch hello.sh
+</pre>
+
+<h3>sbatch optiopns</h3>
+<ul>
+  <li>Script prefix are options you may include in your script header</li>
+  <li>These options may be provided directly in the command line after
+  <kbd>sbatch</kbd> command. You use the same options mentioned in the header without
+  <kbd>#SBATCH</kbd> prefix.
+  <pre>Ex: sbatch --time=1:00 --partition=single hello.sh</pre></li>
+</ul>
+
+<table class="describe">
+  <tr>
+    <th>Script header options</th>
+    <th>Purpose</th>
+  </tr>
+  <tr>
+    <td>#SBATCH --partition=<i>queue-name</i></td>
+    <td>Name of the queue for resource allocation. It is mandatory to set the right queue name</td>
+  </tr>
+  <tr>
+    <td>#SBATCH --time=<i>time</i></td>
+    <td>Maximum time limit in format DD:HH:MM:SS</td>
+  </tr>
+  <tr>
+    <td>#SBATCH --nodes=<i>number</i></td>
+    <td>Number of nodes to allocate</td>
+  </tr>
+  <tr>
+    <td>#SBATCH --ntasks=<i>number</i></td>
+    <td>Total number of tasks to be allocated. By default each task has 1 cpu.</td>
+  </tr>
+  <tr>
+    <td>#SBATCH --ntasks-per-node=<i>number</i></td>
+    <td>Number of tasks per node. Total being this <i>number</i>
+    multiplyed by the number of nodes. Max either 28 or 40 depending on partition.</td>
+  </tr>
+  <tr>
+    <td>#SBATCH --cpus-per-task=<i>number</i></td>
+    <td>Number of CPU per task. Default is 1.</td>
+  </tr>
+  <tr>
+    <td>#SBATCH --mem=<i>value_in_MB</i></td>
+    <td>Maximum memory per node. Default is either 128000 or 96000 MB, depending on partition</td>
+  </tr>
+  <tr>
+    <td>#SBATCH --output=<i>file_name</i></td>
+    <td>Name of the file to store output in.</td>
+  </tr>
+  <tr>
+    <td>#SBATCH --error=<i>file_name</i></td>
+    <td>Name of the file for storing errors</td>
+  </tr>
+  <tr>
+    <td>#SBATCH --mail-type=<i>event</i></td>
+    <td>Send an email when certain events occur. Valid events: NONE, BEGIN, END, FAIL,
+    REQUEUE, ALL</td>
+  </tr>
+  <tr>
+    <td>#SBATCH --mail-user=<i>mail-address</i></td>
+    <td>User email address to send messages to</td>
+  </tr>
+  <tr>
+    <td>#SBATCH --job-name=<i>name</i></td>
+    <td>Job name</td>
+  </tr>
+
+</table>

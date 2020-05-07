@@ -1,0 +1,43 @@
+<h2>See available resources on partitions (queues)</h2>
+
+<p><kbd>sinfo_t_idle</kbd> - a linux wrapper command to show a list of partitions on the cluster
+and idle nodes on it</p>
+
+<p>An example of the output of such a command will be:</p>
+<pre>
+$ sinfo_t_idle
+Partition dev_single    :      4 nodes idle
+Partition single        :      1 nodes idle
+Partition dev_multiple  :      3 nodes idle
+Partition multiple      :      6 nodes idle
+Partition fat           :      0 nodes idle
+Partition dev_multiple_e:      7 nodes idle
+Partition multiple_e    :      0 nodes idle
+Partition dev_special   :      2 nodes idle
+Partition special       :      3 nodes idle
+Partition gpu_4         :      0 nodes idle
+Partition gpu_8         :      0 nodes idle
+</pre>
+
+<p>Here you can see how many nodes are idle (free) on each partition (queue) and ready
+  for immediate use.</p>
+
+<h2>List of user's submitted jobs</h2>
+<p><kbd>squeue</kbd> - displays information about user's specific active, pending and/or recently
+completed jobs</p>
+<p><kbd>squeue -l</kbd> will give you a more detailed information.</p>
+
+<h2>Job information</h2>
+<p><kbd>scontrol show job &ltJOBID&gt</kbd> displays job's state information and diagnostic output
+  for jobs with Id, <kbd>JOBID</kbd></p>
+<p><kbd>JOBID</kbd> you'll get when you submit a job with sbatch or from squeue information table</p>
+<p>To get more detailed output you can use <kbd>-d</kbd> option, such as for example if
+<kbd>JOBID</kbd> is 8888888, to get the detailed data do:</p>
+<pre>
+  scontol -d show job 8888888
+</pre>
+
+<h2>Cancel jobs</h2>
+<p><kbd>scancel &ltJOBID&gt</kbd> will cancel jobs with Id, JOBID.</p>
+<p><kbd>scancel -t &ltSTATE&gt</kbd> will cancel all the jobs in a certain STATE. It can be
+  PENDING, RUNNING or SUSPENDED</p>
