@@ -1,0 +1,72 @@
+<h2>Chain jobs</h2>
+<p>Some jobs require more time to finish than the maximum walltime a single job is allowed to run.
+  As a solution it is possible to run multiple jobs in a chain, meaning next job will start only
+  if the previous one is completed.</p>
+
+<p><kbd>-d, --dependency=&ltdependency_list&gt</kbd> is an option for <kbd>sbatch</kbd> command
+that deffer the start of this job until the specified dependencies have been satisfied / completed.</p>
+<p><kbd>&ltdependency_list&gt</kbd> is of the form <i>&lttype:job_id[:job_id][,type:job_id[:job_id]]&gt</i>
+  or <i>&lttype:job_id[:job_id][?type:job_id[:job_id]]&gt</i>. All dependencies must be satisfied
+  if ',' separator is used. And any dependency must be satisfied if '?' separator is used.
+  Once a job dependency fails due to the termination state of preceding job, the depending job will
+  never run.
+</p>
+<p>Some useful dependency types to use in &ltdependency_list&gt:</p>
+<table class="describe">
+  <tr>
+    <th>Dependency</th>
+    <th>Purpose</th>
+  </tr>
+  <tr>
+    <td>after:job_id[[+time][:job_id[+time]...]]</td>
+    <td>After the specified jobs start or are canceled and 'time' in minutes from job start
+      or cancelation happens, this job can begin execution. If no 'time' is given then there
+      is no delay after start or cancelation.
+    </td>
+  </tr>
+  <tr>
+    <td>afterany:job_id[:job_id...]</td>
+    <td>This job can start after specified jobs are over.</td>
+  </tr>
+  <tr>
+    <td>afternotok:job_id[:job_id...]</td>
+    <td>This job can start after specified jobs have terminated in some failed state.
+      Ex: node failure, non-zero exit code, time out etc.</td>
+  </tr>
+  <tr>
+    <td>afterok:job_id[:job_id...]</td>
+    <td>This job can start after specified jobs executed successfully.
+      Ex: completed with exit code of zero</td>
+  </tr>
+</table>
+
+<p>Knowing that a job submited with <kbd>sbatch</kbd> will output the following string:</p>
+  <pre>Submitted batch job JOB_ID</pre>
+<p>It is possible to cut the string to get job ID into a variable named <kbd>job_id</kbd>
+with the following submit command, where <kbd>hello.sh</kbd> is the name of the job script
+you want to run:</p>
+<pre>job_id=$(sbatch hello.sh) && job_id=${job_id#'Submitted batch job '}</pre>
+<p>Now you can run a <kbd>while</kbd> loop in a bash script to submit multiple chain jobs:</p>
+<pre>
+#!/usr/bin/env bash
+
+job_sbatch_script="hello.sh"
+
+declare -i nr_of_jobs="5" # how many chain jobs you want to run
+
+dependency_type="-d afterok"
+
+declare -i loop_counter="1"
+while [[ ${loop_counter} -le ${nr_of_jobs} ]]; do
+  if [[ ${loop_counter} -eq 1 ]]; then
+    sbatch_options=""
+  else
+    sbatch_options="${dependency_type}:${job_id}"
+  fi
+
+  job_id=$(sbatch ${sbatch_options} ${job_sbatch_script}) && job_id=${job_id#'Submitted batch job '}
+
+  echo "Submitted batch job ${job_id}"
+  loop_counter=$(( ${loop_counter} + 1 ))
+done
+</pre>
