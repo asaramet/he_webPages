@@ -1,0 +1,51 @@
+<h2>STAR-CCM+ license options on bwGRiD Cluster, Esslingen</h2>
+
+<h3>POD Licenses</h3>
+<p>As you may know from paragraphs above, it is hoghly recomended to use POD licenses to run
+STAR-CCM+ applications on HPC servers.</p>
+<p>To do so, you have to specify the CD-ADAPCO license server into 'CDLMD_LICENSE_FILE' variable,
+your POD Key value in 'LM_PROJECT' variable, and run your case with <kbd>-power</kbd> option.
+For exemple, if the POD Key is "xxSomePODkeyxx":</p>
+<pre>
+  export CDLMD_LICENSE_FILE=1999@flex.cd-adapco.com
+  export LM_PROJECT=xxSomePODkeyxx
+
+  starccm+ -power -rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
+</pre>
+<p>or, you can specify your server and key directly into starccm+ command:</p>
+<pre>
+starccm+ -power -licpath 1999@flex.cd-adapco.com -podkey xxSomePODkeyxx \
+-rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
+</pre>
+
+<h3>DOE Tokens</h3>
+<p>For HE users usually from time to time some quantity of DOE Tokens are provided to run
+academical STAR-CCM+ applications.</p>
+<p>If your project conforms to the HE academical license agreement or you run HE academical STAR-CCM+
+cases and don't have any POD key available, the DOE Tokens may be an option, the license server being
+monitored by internal HE admins.</p>
+<p>The argument to run your starccm+ application with DOE tokens will be <kbd>-tokensonly</kbd>.
+Plus you'll have to also provide the name of the license server to confirm the tokens from. Ex:</p>
+<pre>
+export CDLMD_LICENSE_FILE=1999@lizenz-cd-adapco.hs-esslingen.de
+
+starccm+ -tokensonly -rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
+</pre>
+<p>or</p>
+<pre>
+starccm+ -tokensonly -licpath 1999@lizenz-cd-adapco.hs-esslingen.de \
+-rsh ssh -np $np -mppflags "-prot" -machinefile $PBS_NODEFILE -batch $INPUT
+</pre>
+
+<h3>Licenses for mesing, pre/post processing</h3>
+<p>STAR-CCM+ offers 10 DOE Tokens for HE users to open a case for pre/post processing or
+  runing a simple meshing algorithm.</p>
+<p>In order to open a starccm+ GUI with these type of license, after you loaded your module,
+specify HE License Server in CDLMD_LICENSE_FILE and run starccm+ with <kbd>-powerpre</kbd> argument:</p>
+<pre>
+module load &ltyour STAR-CCM+ module&gt
+
+export CDLMD_LICENSE_FILE=1999@lizenz-cd-adapco.hs-esslingen.de
+
+starccm+ -powerpre
+</pre>

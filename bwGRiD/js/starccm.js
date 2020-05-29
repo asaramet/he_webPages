@@ -3,5 +3,6 @@ $(document).ready(function() {
   $("#nav_bar").load("starccm/nav_bar.html");
   $("#basic").load("starccm/basic.html");
   $("#submit").load("starccm/submit.html");
+  $("#license").load("starccm/license.html");
   $("#links").load("starccm/links.html");
 });
